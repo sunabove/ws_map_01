@@ -1,0 +1,49 @@
+body {
+    padding: 0;
+    margin: 0;
+    /*background-image: url( '../image/map/worldDotMap.png' ) ;*/
+    background-image: url( '../image/bg/body_bg_tile.png' ) ;
+} 
+    
+div {
+    padding:0;
+    margin:0; 
+    background: transparent;
+    text-align:center;
+    vertical-align:middle;
+    border: 0 black solid;
+    clear: both;   
+}
+
+.topPaneMapControl {
+   /*background: gold ;*/
+   background-color: white ;
+   background-image: url( '../image/bg/body_bg_tile.png' ) ;
+}
+
+.mapCellPane {
+    border: 0 dotted #99bbe8;
+    /*background-color: gold ;*/
+    /*background-image: url( '../image/bg/body_bg_tile.png' ) ;*/ 
+}
+
+.mapImage {   
+    cursor: hand;
+}
+
+.mapScale {
+    list-style: none ;
+    list-style-type:none; 
+    align: center;
+    text-align: right;
+    vertical-align: middle;
+    /*float: left;*/
+    margin:  0 ;
+    padding: 0 ;
+    border: 0 solid #99bbe8;
+    /*background-color: gray;*/
+    /*background-color: #788D87;*/ 
+    font-size: 10pt;
+    font-family: tahoma,arial,sans-serif ±Ã¼­Ã¼ ;
+    cursor: move;
+}

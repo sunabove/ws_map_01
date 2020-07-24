@@ -1,0 +1,106 @@
+BG_IMAGE_DRAW = 0 
+BG_IMAGE_NAME = "sungnam.jpg"
+BG_IMAGE_FACTOR = 10
+BG_IMAGE_X0 = 1850
+BG_IMAGE_Y0 = 17500
+BG_IMAGE_X1 = 18900
+BG_IMAGE_Y1 = -1950
+
+#LYR_BG = "#FFFFFF"
+LYR_BG = "#FFFFFF"
+#POLY_FILL = "#E7E7E7"
+#POLY_FILL = "#449DA5"
+POLY_LINE = "#F2EECB"
+#POLY_LINE = "#B4B4B4"
+LINE = "#000000"
+#FONT_COLOR = "#4A8CFG"
+FONT_COLOR = "#000000"
+FONT_SIZE = 13
+FONT_NAME = "Times NewRoman"
+FONT_STYLE = 0
+BLACK = "#000000"
+
+LEVEL1 = 0, 250 
+LEVEL2 = 0, 531 
+LEVEL3 = 0, 1128 
+LEVEL4 = 0, 2396 
+LEVEL5 = 0, 5089 
+LEVEL6 = 1, 10808 
+LEVEL7 = 1, 22958 
+LEVEL8 = 1, 48763 
+LEVEL9 = 2, 103576 
+LEVEL10 = 2, 220000 
+
+# 도로
+# 식사
+0100*** = "iconName: restaurant.gif; fontName: Times NewRoman; fontSize: 13; fontColor: #000000;"
+# 소매점
+0203*** = "fontName: Times NewRoman; fontColor: #000000;"
+# 소매점 (할인점 영역) 
+0203126 = "lineColor: #ADAA7B; fillColor: #FFFF84; "
+# 소매점 (할인점 건물)
+0203127 = "lineColor: #ADAA7B; fillColor: #FFFF84; "
+# 소매점 (백화점)
+0204000 = "iconName: department.gif; fontName: Times NewRoman; fontSize: 13; fontColor: #000000;"
+# 자동차 (GAS STATION)
+0401*** = "iconName:oilbank.gif; fontName: Times NewRoman; fontColor: #000000;"
+# 자동차
+# 04***** = "lineColor: #DE9A5A; fillColor: #F7E3CE;"
+# 숙박 (주거 - 아파트 영역) 
+0507126 = "lineColor: #EFEBCE; fillColor: #EFEBCE; "
+# 숙박 (주거)
+0507*** = "fontName: Times NewRoman; fontColor: #000000;"
+# 숙박 (호텔)
+0501*** = "iconName: hotel.gif; "fontName: Times NewRoman; fontColor: #000000; fontSize: 13;"
+# 레져 
+06***** = "lineColor: #BDE373; fillColor: #BDE373; "
+# 레져 (골프장)
+0603001 = "iconName: golf.gif; fontName: Times NewRoman; fontSize: 13; fontColor: #000000;"
+# 공공시설
+0700*** = "fontName: Times NewRoman; fontColor: #000000; lineColor: #E7D8EA; fillColor: #A58CAA;"
+# 공공시설(병원)
+0704*** = "iconName:hospital_b.gif; fontName: Times NewRoman; fontColor: #000000; lineColor: #DE9A5A; fillColor: #F7E3CE;"
+# 공공시설(공원)
+0706*** = "lineColor: #BDE373; fillColor: #BDE373; "
+# 공공시설(도서관)
+0703*** = "iconName:library.gif; fontName: Times NewRoman; fontColor: #000000;
+# 공공시설(치안기관 - 경찰서/해양경찰)
+0702003 = "iconName:police.gif; fontName: Times NewRoman; fontColor: #000000;
+# 공공시설(치안기관 - 파출소)
+0703004 = "iconName:police.gif; fontName: Times NewRoman; fontColor: #000000;
+# 교통 (고속도로 나들목)
+0806001 = "iconName:ic.gif; fontName: Times NewRoman; fontColor: #000000;
+# 교통 (고속도로 나들목)
+0806002 = "iconName:jc.gif; fontName: Times NewRoman; fontColor: #000000;
+# 교통 (터미널 및 승차장)
+0810*** = "iconName:busterminal.gif; fontName: Times NewRoman; fontColor: #000000;
+# 교통 (역)
+0801*** = "iconName:railway.gif; fontName: Times NewRoman; fontColor: #000000;
+# 문화시설 (성당)
+0902*** = "iconName:church.gif; fontName: Times NewRoman; fontColor: #000000;
+# 문화시설 (절)
+0903*** = "iconName:temple.gif; fontName: Times NewRoman; fontColor: #000000;
+# 문화시설 (교회)
+0904*** = "iconName:church.gif; fontName: Times NewRoman; fontColor: #000000;
+# 생활 (그외지역 - 수계)
+1020*** = "lineColor: #A5BEEF; fillColor: #A5BEEF; "
+# 생활 (산업활동) lineColor: #808080
+1016*** = "fontName: Times NewRoman; fontColor: #000000; lineColor: #8BC6B4; fillColor: #8BC6B4;"
+# 생활 (학교)
+1008*** = "iconName: school.gif; fontName: Times NewRoman; fontSize: 13; fontColor: #000000; lineColor: #CACAFC ; fillColor: #E7DBEF ; "
+# 생활 (은행)
+1002*** = "iconName: bank.gif; fontName: Times NewRoman; fontSize: 13; fontColor: #000000;
+# 생활 (우체국)
+1007*** = "iconName: postoffice.gif; fontName: Times NewRoman; fontSize: 13; fontColor: #000000;
+# 생활 (관혼상제-일반예식장)
+1009002 = "iconName: wedding.gif; fontName: Times NewRoman; fontSize: 13; fontColor: #000000;
+# 주택지도 (고속도로)
+1130100 = "lineColor: #4040FF ; fillColor: #4040FF; "
+# 주택지도 (도시고속 일반국도 지방도)
+1130*** = "lineColor: #EFED25 ; fillColor: #EFED25; "
+# 주택지도 (주요간선도)
+1131*** = "lineColor: #B5B6B5 ; fillColor: #B5B6B5; "
+# 주택지도 (그외 준도로)
+1140*** = "lineColor: #B5B6B5 ; fillColor: #B5B6B5; "
+# 공사중 고속도로 (서비스 구역)
+2020*** = "lineColor: #B39FBB ; fillColor: #B39FBB ; "

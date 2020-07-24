@@ -1,0 +1,66 @@
+
+div {
+    text-align:center; vertical-align:middle;
+}
+
+.topPaneMapControl {
+   text-align:center; 
+   vertical-align: middle; 
+   background: gold ;
+   clear: both;   
+   /*background-image: url( "../image/worldDotMap.png" ) ;*/
+}
+
+/* Map Level CSS */
+
+.mapLevelListPaneFrame {
+    background: #8FBC8F ; 
+    border: 1 solid red ;  
+    overflow:hidden;
+    padding: 2 ; margin: 0 ;
+    width: ${ paneWidth + 6 }; height : ${ paneHeight + 6 }; 
+}
+
+.mapLevelListPane {
+    position: relative;
+    background: blue ;
+    border: 0 solid black ; 
+    text-align: center; vertical-align:middle;
+    padding: 2 ; margin: 0 ; 
+    width: ${ paneWidth + 4 }; height : ${ paneHeight + 4}; /**/
+}
+
+.mapLevelPane {
+    position: absolute; 
+    left: 0 ; top: 0 ;
+    background: green ;
+    border: 1 solid black ; 
+    text-align: center; vertical-align:middle;
+    padding: 2 ; margin: auto ; 
+    
+    /* width: ${ paneWidth + 2 }; height : ${ paneHeight + 2 }; */
+}
+
+/* Map Cell CSS */
+
+.mapCellListPane {
+    /*background: #8FBC8F ;*/
+    background: gold;
+    border: 0 solid black ;     
+    clear: both;
+}
+
+.mapCellPane {
+    /*background: #808000 ; */
+    background: gold;
+    /*background-image: url( "../image/worldDotMap_gray.png" ) ;*/
+    border: 0 solid red ;
+    clear: both;
+}
+
+.mapImage {   
+    cursor: hand; 
+    border: 0px solid black;
+    clear: both;
+    margin: 0 ; padding: 0;
+}

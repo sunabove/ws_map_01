@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project PR200_GOODMAP_ENGINE">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="create_run_jar">
+        <jar destfile="D:/WS001_MAP/PR230_GOODMAP_SVR/WebRoot/WEB-INF/lib/goodMap.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Main-Class" value="com.ynhenc.gis.ui.app.mapeditor.YGisMapEditor_00_App"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="D:/WS001_MAP/PR200_GOODMAP_ENGINE/class"/>
+            <fileset dir="D:/WS001_MAP/PR200_GOODMAP_ENGINE/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="D:/WS001_MAP/PR000_BASE/archive/PR000_BASE.jar"/>
+        </jar>
+    </target>
+</project>

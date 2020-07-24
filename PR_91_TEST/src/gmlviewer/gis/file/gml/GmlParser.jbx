@@ -1,0 +1,16 @@
+[PropertyInfo]
+currGmlObject,gmlviewer.gis.file.gml.GmlObject,false,false, , ,false,<default>
+debugFlag,boolean,false,false, , ,false,<default>
+gmlList,java.util.ArrayList,false,false, , ,false,<default>
+indent,int,false,false, , ,false,<default>
+inputFile,java.io.File,false,false, , ,true,<default>
+out,java.io.PrintWriter,false,false, , ,false,<default>
+preAttName,String,false,false, , ,false,<default>
+prevGmlObject,gmlviewer.gis.file.gml.GmlObject,false,false, , ,false,<default>
+recNo,int,false,false, , ,false,<default>
+root,org.w3c.dom.Document,false,false, , ,false,<default>
+[IconNames]
+
+
+
+

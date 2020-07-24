@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xmi:id="_qb8akM37EdqwVrslYOdUDA" name="default">
+  <packagedElement xmi:type="uml:Package" xmi:id="_w8IxIM37EdqwVrslYOdUDA" name="default">
+    <packagedElement xmi:type="uml:Class" xmi:id="_ouOA4Pc8Ed2kTK52_M7N8w" name="Class1"/>
+    <packagedElement xmi:type="uml:DataType" xmi:id="_pQMsmPc8Ed2kTK52_M7N8w" name="DataType1"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_tIJ1mvc8Ed2kTK52_M7N8w" name="Association1" memberEnd="_tIJ1m_c8Ed2kTK52_M7N8w _tIJ1nvc8Ed2kTK52_M7N8w">
+      <ownedEnd xmi:id="_tIJ1m_c8Ed2kTK52_M7N8w" name="source" type="_ouOA4Pc8Ed2kTK52_M7N8w" association="_tIJ1mvc8Ed2kTK52_M7N8w">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_tIJ1nPc8Ed2kTK52_M7N8w" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_tIJ1nfc8Ed2kTK52_M7N8w" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_tIJ1nvc8Ed2kTK52_M7N8w" name="target" type="_pQMsmPc8Ed2kTK52_M7N8w" association="_tIJ1mvc8Ed2kTK52_M7N8w">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_tIJ1n_c8Ed2kTK52_M7N8w" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_tIJ1oPc8Ed2kTK52_M7N8w" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Interface" xmi:id="_kbej4vc9Ed2kTK52_M7N8w" name="Interface1"/>
+  </packagedElement>
+</uml:Model>

@@ -1,0 +1,34 @@
+BG_IMAGE_DRAW = 0 
+BG_IMAGE_NAME = "sungnam.jpg"
+BG_IMAGE_FACTOR = 10
+BG_IMAGE_X0 = 1850
+BG_IMAGE_Y0 = 17500
+BG_IMAGE_X1 = 18900
+BG_IMAGE_Y1 = -1950
+
+#LYR_BG = "#FFFFFF"
+LYR_BG = "#FFFFFF"
+#POLY_FILL = "#E7E7E7"
+#POLY_FILL = "#449DA5"
+POLY_LINE = "#F2EECB"
+#POLY_LINE = "#B4B4B4"
+LINE = "#000000"
+FONT_COLOR = "#4A8CFG"
+#FONT_COLOR = "#000000"
+FONT_SIZE = 13
+FONT_NAME = "Times NewRoman"
+FONT_STYLE = 0
+BLACK = "#000000"
+
+# 그 외-산업 활동
+1016*** = "fontName: Serif; fontColor: #FF0000; lineColor: #808080; fillColor: #8BC6B4;"
+# 서비스 구역
+2020*** = "lineColor: #B39FBB ; fillColor: #B39FBB ; "
+# 공공시설
+0700*** = "fontName: Serif; fontColor: #FF0000; lineColor: #E7D8EA; fillColor: #A58CAA;"
+# 빌딩
+1030*** = "iconName: building_b.gif; fontName: Serif; fontSize: 11; lineColor: #E7D8EA; fillColor: #A58CAA;"
+# 고속도 번호
+1031005 = "iconName: highway.gif; fontName: Serif; fontColor:#FF0000; fontSize: 11; lineColor: #E7D8EA; fillColor: #A58CAA;"
+# 고속 IC
+0806*** = "iconName: IC.gif; fontName: Serif; fontColor:#FF0000; fontSize: 11; lineColor: #E7D8EA; fillColor: #A58CAA;"

@@ -1,0 +1,71 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+	<TITLE> GoodMap Viewer V10.00 </TITLE>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="imagetoolbar" content="no">
+	
+	<script>
+    	var myObj = window.dialogArguments;
+    </script>
+    
+    <script>
+    	function myMapLoad() {
+    		var iframe = document.getElementById("map");
+    		iframe.width = 500;
+    		iframe.height = 500;
+    		iframe.src = myObj.path;
+    	}
+    	
+    	function printMap() {
+    		window.print();
+    	}
+    	
+    	function dialogClose() {
+    		window.close();
+    	}
+    	
+    	function saveMap() {
+    		window.frames["map"].document.execCommand('SaveAs');
+    	}
+    	
+    </script>
+    
+  </head>
+  
+  <body onload="myMapLoad();">
+  
+  <br/>
+  <table>
+  	<tr>
+  		<td style="text-align: right">
+  			<input type="button" style="width: 100" name="print" value="인쇄하기" onclick="printMap();"/>
+  			<input type="button" style="width: 100" name="save" value="저장하기" onclick="saveMap();"/>
+  			<input type="button" style="width: 100" name="close" value="닫기" onclick="dialogClose();"/><br/><br/>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td>
+	  		<iframe 
+			id="map"
+			name="map"
+			src="about:blank" 
+			width="500"
+			height="500"
+			scrolling="no" 
+			frameborder="3" 
+		    style="border: 4 solid #919191; padding: 0; margin: 0; "
+			>
+			</iframe>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td>내용 입력</td>
+  	</tr>
+  	<tr>
+  		<td><textarea name="contents" rows="4" cols="60"></textarea></td>
+  	</tr>
+  </table>
+  	
+  </body>
+</HTML>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Title">
+   <intro>
+      <description>
+         <b>Body</b>
+      </description>
+   </intro>
+   <item title="Item (1)" dialog="true" skip="false">
+      <description>
+         <b>안녕하세요.</b>
+      </description>
+      <subitem label="Sub-Step" skip="false">
+      </subitem>
+   </item>
+   <item title="Item" dialog="true" skip="false">
+      <description>
+         <b>Body</b>
+      </description>
+   </item>
+</cheatsheet>

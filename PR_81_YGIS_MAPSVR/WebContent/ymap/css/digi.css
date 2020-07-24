@@ -1,0 +1,22 @@
+.com {
+	font-size: 12px;
+	line-height: 150%;
+	text-decoration: none;
+	font-family: "µ¸¿òÃ¼", "µ¸¿ò";
+	color: #003333;
+
+
+}
+body, td {font-size: 9pt;}
+a:link {
+	text-decoration: color: #003333;none;
+}
+a:visited {
+	text-decoration: color: #003333; none;
+}
+a:hover {
+	text-decoration: color: #003333;none;
+}
+a:active {
+	text-decoration: color: #003333; none;
+}

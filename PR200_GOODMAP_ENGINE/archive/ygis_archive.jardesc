@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jardesc>
+<jar path="C:/AA00_WSList/A03_MAP/PR_05_YGIS_MAPSVR/WebRoot/WEB-INF/lib/ygis.jar"/>
+<options buildIfNeeded="true" compress="false" descriptionLocation="/PR_01_YGIS_ENGINE/archive/ygis_archive.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+<storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+<selectedProjects/>
+<manifest generateManifest="true" mainClassHandleIdentifier="=PR_01_YGIS_ENGINE/src_ygis_engine&lt;com.ynhenc.gis.ui.app.mapeditor{YGisMapEditor_00_App.java[YGisMapEditor_00_App" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+<sealing sealJar="true">
+<packagesToSeal/>
+<packagesToUnSeal/>
+</sealing>
+</manifest>
+<selectedElements exportClassFiles="false" exportJavaFiles="false" exportOutputFolder="true">
+<javaElement handleIdentifier="=PR_01_YGIS_ENGINE/src_wordart"/>
+<javaElement handleIdentifier="=PR_01_YGIS_ENGINE/src_ygis_engine"/>
+<folder path="/PR_01_YGIS_ENGINE/lib"/>
+<file path="/PR_01_YGIS_ENGINE/.project"/>
+<folder path="/PR_01_YGIS_ENGINE/bin"/>
+<javaElement handleIdentifier="=PR_01_YGIS_ENGINE/test"/>
+<file path="/PR_01_YGIS_ENGINE/.mymetadata"/>
+<file path="/PR_01_YGIS_ENGINE/.classpath"/>
+</selectedElements>
+</jardesc>

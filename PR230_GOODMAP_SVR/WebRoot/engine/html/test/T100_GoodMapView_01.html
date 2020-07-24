@@ -1,0 +1,331 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+	<TITLE> GoodMap Viewer V10.00 </TITLE>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="imagetoolbar" content="no">
+	
+	<!-- Test Function -->
+	<script>
+		
+		// Function Name: move
+		// Function Desc: 입력한 좌표로 지도 이동
+		function move(){
+			var x = 252145;
+			var y = 163015;
+			alert("x: " + x + ", y: " + y);
+			map.setMapCenter(x, y);
+			map.mapRefresh();
+		}
+		
+		// Function Name: zoomIn
+		// Function Desc: 지도 확대
+		function zoomIn(){
+			map.zoomIn();
+			map.mapRefresh();
+		}
+		
+		// Function Name: zoomOut
+		// Function Desc: 지도 축소
+		function zoomOut(){
+			map.zoomOut();
+			map.mapRefresh();
+		}
+		
+		// Function Name: fullExtent
+		// Function Desc: 전체 보기
+		function fullExtent(){
+			map.fullExtent();
+			map.mapRefresh();
+		}
+
+		// Function Name: setMapLevel
+		// Function Desc: 지도레벨 변경
+		function setMapLevel(){
+			var max = document.mapLoader.zoomLevelCurr.value;
+			var cur = document.inputLevel.levelVal.value;
+
+			//if (max > cur)
+			if (8 > cur)
+			{
+				alert("call");
+				map.setMapLevel(cur);
+				map.mapRefresh();
+			}
+		}
+
+		// Function Name: setMapSize
+		// Function Desc: 지도크기 변경
+		function setMapSize(){
+			var h = document.inputSize.height.value;
+			var w = document.inputSize.width.value;
+			alert("h: " + h + ", w: " + w);
+			map.doSetMapSize(h, w);
+		}
+
+		// Function Name: getMapCenter
+		// Function Desc: 지도 중심좌표 조회
+		// Return Type: Pnt Class
+		function getMapCenter(){
+			var p = map.getMapCenter();
+			alert("x: " + p.x + ", y: " + p.y);
+		}
+
+		// Function Name: getMapLevel
+		// Function Desc: 지도현재표출레벨
+		function getMapLevel(){
+			var l = map.getMapLevel();
+			alert("Level: " + l);
+		}
+
+		// Function Name: getMbr
+		// Function Desc: 지도표출영역 조회
+		// Return Type: Mbr Class
+		function getMbr(){
+			var m = map.getMbr();
+			alert("min x: " + m.minX + ", min y: " + m.minY + ", max x: " + m.maxX + ", max y: " + m.maxY);
+		}
+
+		// Function Name: goodmapMouseMove
+		// Function Desc: 커스텀 마우스 이벤트 - 지도 이미지에서 발생하는 Mouse Move 이벤트를 처리한다.
+		function goodMapMouseMove(e)
+		{
+			// 마우스의 포인터 좌표를 구한다.
+			var loc = map.getMapLoc(e.x, e.y);
+			
+			document.mouseCoord.coordx.value = loc.x;
+			document.mouseCoord.coordy.value = loc.y; 
+		}
+		
+		// Function Name: calcLength
+		// Function Desc: 거리계산
+		function calcLength(){
+			map.setMapMode(1);
+		}
+
+		// Function Name: eraseLength
+		// Function Desc: 지우기
+		function eraseLength(){
+		//	map.doRemoveAllPoiList();
+			map.doClearSearch();
+			map.mapRefresh();
+		}
+
+		// Function Name: addPoi
+		// Function Desc: POI추가
+		var kkk = false;
+		function addPoi() 
+		{	
+			kkk = !kkk;
+			if (!kkk)
+			{
+				alert('poi 입력모드 해제');	
+			}
+			else
+			{
+				alert('poi 입력모드 동작');
+			}
+		}
+
+		function printMap() {
+
+			var src = map.doGetImageSrc();
+			var MyObj = new Object();
+			
+			MyObj.path = src; 
+			window.showModalDialog("/PR230_GOODMAP_SVR/engine/html/test/T102_PrintDialog.html", MyObj, "dialogHeight : 750px; dialogWidth: 650px; dialogLeft : 200px;");
+		}
+
+		function sendMail() {
+
+			var src = map.doGetImageSrc();
+			var MyObj = new Object();
+			
+			MyObj.path = src; 
+			window.showModalDialog("/PR230_GOODMAP_SVR/engine/html/test/T103_SendMail.html", MyObj, "dialogHeight : 750px; dialogWidth: 650px; dialogLeft : 200px;");
+		}
+
+		function test() 
+		{
+		
+		/*
+			var layerName = "testlayer";
+			var dx, dy, dx1, dy1, dx2, dy2;
+			var color = "ff0000";
+			var label = "stop";
+			var icon = "BusStop_Green_14x18.gif";
+			var width = "10";
+			
+			// 순천 ic
+			dx = 244048.74602;
+			dy = 167248.3344;
+
+			// 순천 시청
+			dx1 = 244313.32932;
+			dy1 = 161374.58292;
+
+			// 광양 ic
+			dx2 = 255002.49464;
+			dy2 = 163702.91684;
+			
+		  	map.doAddPoi2(0, 10, layerName, dx, dy, label, color, icon);
+		  	map.doAddLoi2(1, 11, layerName, dx, dy, dx1, dy1, color, width);
+		  	map.doAddLoi2(1, 2, layerName, dx1, dy1, dx2, dy2, color, width);
+		  	
+		  	
+		  	map.mapRefresh();
+		*/
+		}
+
+		function test2() 
+		{
+		//	map.doRemoveSessionLayer("testlayer", 10);
+			map.doRemoveSessionLayer("testlayer", 11);
+			map.doRemoveSessionLayer("testlayer", 2);
+
+		//	map.doRemoveSessionLayer("testlayer", "-1");
+		//	map.doRemoveAllPoiList();
+			
+			
+			map.mapRefresh();
+
+		/*
+			var dx, dy;
+			var radius = 2000;
+
+			dx = 243768.81674;
+			dy = 163398.64539;
+			
+			map.doGetLayerSearchByCircle("0270A4081003~0", dx, dy, radius);
+			map.mapRefresh();
+		*/
+		//	map.setMapMode(2);
+
+			var dx, dy, dx1, dy1;
+
+			dx = 244048.74602;
+			dy = 167248.3344;
+			dx1 = 244313.32932;
+			dy1 = 161374.58292;
+
+			alert(map.getDistanceWgs84(dx, dy, dx1, dy1));	
+		}
+
+		// Function Name: goodmapMouseUp
+		// Function Desc: 커스텀 마우스 이벤트 - 지도 이미지에서 발생하는 Mouse Up 이벤트를 처리한다.
+		function goodMapMouseUp(e) 
+		{
+			if (kkk) 
+			{
+				var loc = map.getMapLoc(e.x, e.y);
+				var poi = {
+	                        "id" : "0" ,
+	                        "layerName" : "testlayer" ,
+	                        "label" : "stop" ,
+	                        "icon" : "BusStopHa_Red_30x27.png" ,
+	                        "mapX" : loc.x ,
+	                        "mapY" : loc.y ,
+	                        "textColor" : "ff0000" ,
+	                        "a" : ""
+	                    };
+                    
+		         map.doAddPoi( poi );
+		         map.mapRefresh();
+			}
+		}
+
+		function showDoGetLayerCoord(){
+			var json =  map.doGetLayerCoord( "0001X9100108~0" );
+			
+			alert( "layerName = " + json.layerName );
+			var shapeList = json.shapeList ;
+			alert( "shapeList length = " + shapeList.length );
+			var shape = shapeList[ 0 ];
+			alert( "id = " + shape.id );
+			var pointList = shape.pointList;
+			for( var i = 0, iLen = pointList.length ; i < iLen ; i ++ )
+			{
+			  alert( "point : x = " + pointList[ i ].x + " , y = " + pointList[i].y );
+			}
+		}
+		
+	</script>
+	
+ </HEAD>
+
+ <BODY onload="mapLoader.submit();" >
+  
+	<iframe 
+		id="map"
+		name="map"
+		src="about:blank" 
+		width="500"
+		height="500"
+		scrolling="no" 
+		frameborder="3" 
+	    style="border: 4 solid #919191; padding: 0; margin: 0; "
+	>
+	</iframe>
+
+	<form 
+		id="mapLoader" 
+		name="mapLoader"
+		target="map" 
+		method="get"
+		action="/PR230_GOODMAP_SVR/engine/jsp/M020_MapControl.jsp"  >
+		<input type="hidden" name="width" value="500" />
+		<input type="hidden" name="height" value="500" />
+		<input type="hidden" name="mapX" value="252145" />
+		<input type="hidden" name="mapY" value="163015" />
+		<input type="hidden" name="zoomLevelCurr" value="8" />
+		<input type="hidden" name="logoImage" value="../../image/bg/body_bg_tile.png" />
+		<input type="hidden" name="compass" value="1" />
+		<input type="hidden" name="scaleBar" value="1" />
+	</form>
+	기본기능:
+	<br/>
+	<input type="button" value="이동" onclick="move();">
+	<input type="button" value="확대" onclick="zoomIn();">
+	<input type="button" value="축소" onclick="zoomOut();">
+	<input type="button" value="전체화면" onclick="fullExtent();">
+	<input type="button" value="거리계산" onclick="calcLength();">
+	<input type="button" value="지우기" onclick="eraseLength();">
+	<input type="button" value="이전화면" onClick="javascript: if( ! map.goMapPrev() ) { } ;" />
+	<input type="button" value="다음화면" onclick="javascript: if( ! map.goMapNext() ) { } ;" />
+	<input type="button" value="POI 추가" onclick="addPoi();">
+	<input type="button" value="TEST" onclick="test();">
+	<input type="button" value="TEST2" onclick="test2();">
+	<input type="button" value="Show Layer Coord" onclick="showDoGetLayerCoord();">
+	<input type="button" value="지도 프린트" onclick="printMap();">
+	<input type="button" value="지도 메일전송" onclick="sendMail();">
+
+	<br/>
+	<br/>
+	지도 레벨: 
+	<form
+		name="inputLevel">
+		<input type="text" name="levelVal" value="0" />&nbsp;
+		<input type="button" value="apply" onclick="setMapLevel();" />
+	</form>  
+	지도 크기: 
+	<form
+		name="inputSize">
+		height&nbsp;:&nbsp;		<input type="text" name="height" value="300" />&nbsp;
+		width&nbsp;&nbsp;:&nbsp;<input type="text" name="width" value="300" />&nbsp;
+		<input type="button" value="apply" onclick="setMapSize();" />
+	</form>  
+	지도 정보 조회: 
+	<input type="button" value="지도중심점" onclick="getMapCenter();">
+	<input type="button" value="표출레벨" onclick="getMapLevel();">
+	<input type="button" value="지도표출영역" onclick="getMbr();">
+	<br/>
+	<br/>
+	마우스 포인터 좌표조회:
+	<form
+		name="mouseCoord">
+		x:&nbsp;&nbsp;<input type="text" name="coordx" value="" />&nbsp;&nbsp;
+		y:&nbsp;&nbsp;<input type="text" name="coordy" value="" />
+	</form>
+	
+ </BODY>
+</HTML>

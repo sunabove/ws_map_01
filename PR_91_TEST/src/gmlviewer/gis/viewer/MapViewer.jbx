@@ -1,0 +1,39 @@
+[PropertyInfo]
+attributeWindow,javax.swing.JWindow,false,false, , ,false,<default>
+calcLayer,gmlviewer.gis.model.Lyr,false,false, , ,false,<default>
+calcShape,gmlviewer.gis.model.Shape,false,false, , ,false,<default>
+calcShapeFillColor,java.awt.Color,false,false, , ,false,<default>
+calcShapeLineColor,java.awt.Color,false,false, , ,false,<default>
+clearClickedPoints,boolean,false,false, , ,false,<default>
+gisProject,gmlviewer.gis.model.GisProject,false,false, , ,true,<default>
+historyList,java.util.Vector,false,false, , ,false,<default>
+historyNum,int,false,false, , ,false,<default>
+image,java.awt.image.BufferedImage,false,false, , ,true,<default>
+inited,boolean,false,false, , ,false,<default>
+isPainting,boolean,false,false, , ,false,<default>
+lastDragME,java.awt.event.MouseEvent,false,false, , ,false,<default>
+lastMoveME,java.awt.event.MouseEvent,false,false, , ,false,<default>
+lastPressME,java.awt.event.MouseEvent,false,false, , ,false,<default>
+lastWorkStateEvent,gmlviewer.gis.comp.StateEvent,false,false, , ,false,<default>
+logoImage,java.awt.Image,false,false, , ,false,<default>
+mbrBar,javax.swing.JTextField,false,false, , ,true,<default>
+mode,int,false,false, , ,false,<default>
+progressBar,javax.swing.JProgressBar,false,false, , ,false,<default>
+proj,gmlviewer.gis.model.Project,false,false, , ,false,<default>
+selShpLayer,gmlviewer.gis.model.Lyr,false,false, , ,false,<default>
+showAllLyr,boolean,false,false, , ,false,<default>
+showCenterLine,boolean,false,false, , ,false,<default>
+showGlobalBox,boolean,false,false, , ,false,<default>
+showMapUnitBoundary,boolean,false,false, , ,false,<default>
+showTextLayer,boolean,false,false, , ,false,<default>
+status,String,false,false, , ,false,<default>
+statusLabel,javax.swing.JLabel,false,false, , ,true,<default>
+xorLineColor,java.awt.Color,false,false, , ,false,<default>
+zoomInPercent,double,false,false, , ,false,<default>
+zoomLevel,int,false,false, , ,true,<default>
+zoomOutPercent,double,false,false, , ,false,<default>
+[IconNames]
+
+
+
+

@@ -1,0 +1,17 @@
+[PropertyInfo]
+address1,String,false,false, , ,false,<default>
+address2,String,false,false, , ,false,<default>
+bldName,String,false,false, , ,false,<default>
+coordinates,String,false,false, , ,false,<default>
+ex,String,false,false, , ,false,<default>
+homepage,String,false,false, , ,false,<default>
+key,int,false,false, , ,false,<default>
+objectId,int,false,false, , ,true,<default>
+ox,boolean,false,false, , ,false,<default>
+recNo,int,false,false,recNo,recNo,true,<default>
+telephoneNo,String,false,false, , ,false,<default>
+[IconNames]
+
+
+
+

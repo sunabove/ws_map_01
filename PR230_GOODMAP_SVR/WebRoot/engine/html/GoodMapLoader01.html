@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+
+<HEAD>
+<TITLE> GoodMap Loader V1.0.02 </TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="imagetoolbar" content="no">
+
+<script type="text/javascript" src="../js/js_005_ext-2.2/adapter/prototype/prototype_1.6.1.js"></script>
+
+<script>
+
+function showAllStation(){
+	map.setMapLevel( 3 );
+	
+	var mbr = map.getMbr();
+	alert(mbr.minX);
+}
+
+function goodMapMouseDown( e ) { 
+    var loc = map.getMapLoc( e.x , e.y );
+
+    $( "x" ).value = loc.x;
+    $( "y" ).value = loc.y; 
+}
+
+var poiId = 100;
+
+function test_DoAddPoi() {
+
+    var localDebug = false ; 
+
+    var x = $F( "x" );
+    var y = $F( "y" );
+    
+    if( localDebug ) {  alert( x + ", " + y ); }
+    
+	var poi = {
+	   "id" : poiId ,
+	   "layerName" : "abcd" ,
+	   "label" : "def" ,
+	   "icon" : "404017.PNG" ,
+	   "mapX" : x ,
+	   "mapY" : y ,
+	   "textColor" : "#FF00CC" ,
+	   "a" : ""
+	}; 
+	
+	map.doAddPoi( poi );
+	
+	//map.setMapLocation( poi.mapX, poi.mapY );
+	
+	map.mapRefresh();
+}
+
+function test_DoDrawLine() {  
+	var url = "http://211.236.93.75:80/PR230_GOODMAP_SVR/engine/jsp/M043_SG_BUS_ShowAct.jsp";
+	var params = { }; 
+    map.callAjaxUrlParams( url, params, "" );  
+    map.mapRefresh(); 
+}
+
+function test_DoRemovePoi() { 
+    map.doRemoveAllPoiList();
+    
+    map.mapRefresh();
+}
+
+function mapZoomLevelListener( zoomLevel ) {
+    var mapImageUrl = $( "mapImageUrl" );
+    mapImageUrl.innerHTML = "URL: " + map.getMapCurrentUrl(); 
+    $( "mapControlVersion" ).update( map.getMapControlVersion() );
+    //$( "iFrameUrl" ).innerHTML = "map control : " + map.SRC ;
+}
+
+</script>
+
+</HEAD>
+
+<BODY onload="" > 
+<div id="mapControlVersion"></div>
+<div id="mapImageUrl"></div>  
+X:  <input type="text" id="x" value="242145" > 
+Y:  <input type="text" id="y" value="163015" > 
+
+<input type="button" value="POI 추가" onclick="test_DoAddPoi();"> 
+<input type="button" value="BUS 노선" onclick="test_DoDrawLine();"> 
+<input type="button" value="POI 삭제" onclick="test_DoRemovePoi();"> 
+<br/>
+
+<iframe 
+	id="map"
+	name="map"
+	src="./M020_MapControl_1024_768_0.html" 
+	width="1024"
+	height="768"
+	scrolling="no" 
+	frameborder="3" 
+	style="border: 4 solid #919191; padding: 0; margin: 0; "
+>
+</iframe> 
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,103 @@
+<html>
+	<head>
+		<title>Control Panel Example</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		
+		<!-- extjs css -->
+		<link rel="stylesheet" type="text/css" href="../../js/v1.9.0/js_001_extjs3.0/resources/css/ext-all.css" />
+		<!-- GEarth css -->
+	    <link rel="stylesheet" type="text/css" href="../../css/v1.9.0/Ext.ux.GEarthPanel-1.1.css" />
+	    
+	    <!-- Form css -->
+	    <link rel="stylesheet" type="text/css" href="../../js/v1.9.0/js_001_extjs3.0/examples/form/forms.css"/>
+	    
+	    
+	    <!-- Google Earth js -->
+	    <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAvQLslBJZByOlS8Y3iPXgexSV5romlzgkIRRVpZz7TQ7Jsa0ZQxRh2GVXWb7jYX7ajChOO9olKH0Sgg"></script>
+	    
+	    <!-- extjs js -->
+	    <script type="text/javascript" src="../../js/v1.9.0/js_001_extjs3.0/adapter/ext/ext-base.js"></script> 
+	    <script type="text/javascript" src="../../js/v1.9.0/js_001_extjs3.0/ext-all-debug.js"></script> 
+	    
+	    
+	    <!-- GEarth js -->
+	  	<script type="text/javascript" src="../../js/v1.9.0/js_003_gearthpanel1.1/Ext.ux.GEarthPanel-1.1.js"></script>
+	  	
+	  	<!-- SearchRoute js -->
+	  	<script type="text/javascript" src="../../js/v1.9.0/js_004_ysearchpanel0.1/Ext.ux.YSearchPanel-0.1.js"></script>
+	  	
+	    <script type="text/javascript">
+	    	
+	    	var earthPanel;
+	    	
+	    	google.load("earth", "1");
+	    	google.load("maps", "2.xx");
+	            
+	    	Ext.onReady(function(){
+	    		
+	    		// Create Google Earth panel
+	    		//var earthPanel = new Ext.ux.GEarthPanel({
+	    		earthPanel = new Ext.ux.GEarthPanel({
+	    			region: 'center',
+	    			contentEl: 'eastPanel',
+	    			margins: '5 5 5 0'
+	    		});
+	    		
+	    		// Create control Panel
+	    		var controlPanel = new Ext.Panel({
+	    			region: 'west',
+	    			contentEl: 'westPanel',
+	    			title: 'Control Panel',
+	    			width: 280,
+	    			border: true,
+	    			collapsible: true,
+	    			margins: '5 5 5 5',
+	    			layout: 'accordion',
+	    			layoutConfig: {	animate: true },	
+	    			defaultType: 'panel',
+	    			defaults: {	bodyStyle: 'padding: 10px' }
+	    		});
+	    		
+	    		// Create Search Route Panel
+	    		var searchPanel = new Ext.ux.YSearchPanel({
+	    			region: 'center',
+	    			contentEl: 'westPanel',
+	    			margins: '5 5 5 0'	
+	    		});
+	    		
+	    		
+	    		// Add panels
+	    		controlPanel.add(searchPanel.getSearchPanel());
+	    		
+	    		// Add panels to browser viewport
+	    		var viewport = new Ext.Viewport({
+	    			layout: 'border',
+	    			items: [controlPanel, earthPanel]
+	    			//items: [controlPanel]
+	    		});
+	    		
+	    		// Build control panel
+	    		earthPanel.on('earthLoaded', function(){
+	    			
+	    			// Display KMLs
+	    			//earthPanel.fetchKml('http://earthatlas.info/kml/statistics/infant_mortality_rate_2005_prism.kmz');
+	    			//earthPanel.fetchKml('http://localhost:8080/PR170_ROUTE/jsp/v1.9.0/route/P001_SearchPath.jsp?sx=127.061054&sy=37.4392602&ex=127.046032&ey=37.6528058');
+	    			//earthPanel.fetchKml('http://localhost:8080/PR170_ROUTE/jsp/v1.9.0/route/P001_SearchPath.jsp?sx=126.9792374&sy=37.5724709&ex=126.9983055&ey=37.5643589');
+	    			
+	    			// Add panels
+	    			controlPanel.add(earthPanel.getKmlPanel());
+	    			controlPanel.add(earthPanel.getLocationPanel());
+	    			controlPanel.add(earthPanel.getLayersPanel());
+	    			controlPanel.add(earthPanel.getOptionsPanel());
+	    			controlPanel.doLayout();
+	    		});
+	    	});
+	
+	    </script>
+		
+	</head>
+	<body>
+		<div id="westPanel"></div>
+		<div id="eastPanel"></div>
+	</body>
+</html>

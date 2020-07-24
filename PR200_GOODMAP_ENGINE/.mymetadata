@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="PR200_GOODMAP_ENGINE"
+  id="myeclipse.1208319668765"
+  context-root="/ygis"
+  j2ee-spec="5.0"
+  archive="PR200_GOODMAP_ENGINE.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

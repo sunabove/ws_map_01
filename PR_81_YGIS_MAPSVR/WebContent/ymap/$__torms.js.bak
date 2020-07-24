@@ -1,0 +1,209 @@
+// JavaScript Document
+
+function switch_mage(imgName, imgSrc) 
+{
+  if (document.images)
+  {
+    if (imgSrc != "none")
+    {
+      document.images[imgName].src = imgSrc;
+    }
+  }
+}
+
+function get_obj(id){
+	 return document.getElementById( id ); 
+}
+
+function get_value(id){
+	 var obj = get_obj( id );
+	 if( obj != null ) {
+	 	return obj.value;
+	 } else {
+	 	alert( "null object = " + id );	 	
+	 	return "";
+	 }
+}
+
+function set_value(id, val){
+	var obj = get_obj( id );
+	if( obj != null ) {
+		obj.value = val;  
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function main_form_submit(a){
+	var obj = get_obj( 'MAIN_FORM' );
+	if( obj != null ) { 
+		obj.submit();
+	} else {
+		alert( "submit is skipped!" );
+	}
+}
+
+function set_category( a ) {
+	set_value( "category" , a );
+}
+
+function command( a ) {
+	set_value( 'cmd', a );
+}
+
+function set_target_id( val ) {
+        set_value( "target_id", val );
+}
+
+function log_in( a ) {
+	command( 'log_in' );
+	main_form_submit( a );
+}
+function log_out( a ) {
+	command('log_out' );
+	main_form_submit( a );
+}
+
+function user_create( a ) {
+	command( 'user_create' );
+	main_form_submit( a );
+}
+
+function yakwan_yes( a ) {
+	command( 'yakwan_yes' );
+	main_form_submit( a );
+}
+
+function yakwan_no( a ) {
+	command( 'yakwan_no' );
+	main_form_submit( a );
+}
+
+function user_info_input_yes( a ) {
+	command( 'user_info_input_yes' );
+	main_form_submit( a );
+}
+
+function user_info_input_no( a ) {
+	command( 'user_info_input_no' );
+	main_form_submit( a );
+}
+
+function user_regi_success_verify( a ) {
+	command( 'user_regi_success_verify' );
+	main_form_submit( a );
+}
+
+function error_message_verify( a ) {
+	command( 'error_message_verify'  );
+	main_form_submit( a );
+}
+
+function view( a ) {
+	command( 'view' );
+	main_form_submit( a );
+}
+
+function select_layer_type( a ) {
+	command( 'select_layer_type' );
+	main_form_submit( a );
+}
+
+function search_index( a ) {
+	command( 'search_index' );
+	set_value( "first_rec_no", 0 );
+	set_value( "page_no", 0 );
+	main_form_submit( a );
+}
+
+function visit_goe_index( a ) {
+	set_category( "registry" );
+	command( 'visit_geo_index' );
+	set_value( 'regi_type', 0 );
+	set_value( 'srch_unit', '' )
+	set_value( "first_rec_no", 0 );
+	main_form_submit( a );
+}
+
+function visit_time_index( a ) {
+	set_category( "registry" );
+	command( 'visit_time_index' );
+	set_value( 'regi_type', 1 );
+	set_value( 'srch_unit', '' );
+	set_value( "first_rec_no", 0 );
+	main_form_submit( a );
+}
+
+function insert_index( a ) {
+	//set_category( "registry" );
+	command( 'insert' );
+	main_form_submit( a );
+}
+
+function edit_index( a, r_id ) {
+	//set_category( "registry" );
+	command( 'edit' );
+	set_target_id( r_id );
+	main_form_submit( a );
+}
+
+function save_index( a ) {
+	set_category( "registry" );
+	command( 'save' );
+	main_form_submit( a );
+}
+
+function delete_index( a, r_id ) {
+	
+	if( r_id > 0 ) {
+	   var msg = r_id + "를 정말로 삭제하시겠습니까?";
+	
+	   if( confirm( msg ) ) {
+	      set_category( "registry" );
+	      command( 'delete' );
+	      set_target_id( r_id );
+	      main_form_submit( a );
+           }
+        }
+}
+
+function cancel_index( a ) {
+	set_category( "registry" );
+	command( 'cancel' );
+	main_form_submit( a );
+}
+
+function change_layer( a ) {
+	command( 'change_layer' );
+	main_form_submit( a );
+}
+
+function batch_work( a ) {
+	set_category( "xml" );
+	command( "batch_work" );
+	main_form_submit( a );	
+}
+
+function move_page( no, a ) {
+	set_value( "page_no", no );
+	command( "move_page" );
+	main_form_submit( a );	
+}
+
+function upload_file( a ) {	
+	var up_file = get_value( "file_to_upload" );
+	
+	if( up_file == null || up_file == "" ) {
+		var msg = "업 로드할 파일을 선택하세요.";
+		alert( msg );
+	} else {
+		if( up_file.toUpperCase().indexOf( ".DBF" ) < 0 ) {
+			alert( "DBF 파일을 선택하여 주십시오!" );
+		} else {
+		   set_category( "xml" );
+	           command( "upload_file" );
+	           main_form_submit( a );
+	        }
+	}
+}

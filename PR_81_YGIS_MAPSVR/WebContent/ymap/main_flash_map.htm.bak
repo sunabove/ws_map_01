@@ -1,0 +1,114 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>main flash map</title>
+
+<script>
+function onClickDong(dong_value)
+{
+	if (dong_value == "41131510") {	//신흥동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41131540")  {	//태평동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41131570")  {	//수진동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41131590")  {	//단대동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41131600")  {	//산성동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41131610")  {	//양지동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41131620")  {	//복정동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41131630")  {	//신촌동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41131640")  {	//고등동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41131650")  {	//시흥동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41133510")  {	//성남동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41133520")  {	//중동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41133530")  {	//금광동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41133550")  {	//은행동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41133570")  {	//상대원동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41133660")	{	//하대원동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41135510")  {	//분당동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41135520")  {	//수내동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41135550")  {	//정자동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41135580")  {	//서현동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41135600")  {	//이매동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41135620")  {	//야탑동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41135650")  {	//판교동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41135660")  {	//금곡동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41135670")  {	//구미동
+		document.all.move_emd_id.value = dong_value;
+	}
+	else if (dong_value == "41135680")  {	//운중동
+		document.all.move_emd_id.value = dong_value;
+	}
+	
+	MAIN_FORM.submit(); 
+}
+
+</script>
+</head>
+
+<body topmargin="0" leftmargin="0">
+
+<form name="MAIN_FORM" method="GET" target = "_top" action="http://221.150.168.64/aks/gis/view_gis.jsp">
+  <table width="460" height="400" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+  <tr>
+  	<td>
+  	<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
+ WIDTH="460" HEIGHT="400" id="flashmap" ALIGN="">
+ <PARAM NAME=movie VALUE="flashmap.swf"> <PARAM NAME=quality VALUE=high> <PARAM NAME=bgcolor VALUE=#FFFFFF> 
+      <EMBED src="flashmap.swf" quality=high bgcolor=#FFFFFF  WIDTH="500" HEIGHT="500" NAME="flashmap" ALIGN=""
+ TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer"></EMBED></OBJECT>
+  	<td>
+  </tr>
+	  <input type="hidden" name= "move_emd_id" value=""  >
+  </table>
+</form>
+
+</body>
+
+</html>

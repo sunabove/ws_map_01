@@ -1,0 +1,4 @@
+#Thu Aug 21 11:04:40 KST 2008
+classpath.helper/org.eclipse.jdt.launching.JRE_CONTAINER/owners=jst.java\:5.0
+classpath.helper/org.eclipse.jst.server.core.container\:\:org.eclipse.jst.server.generic.runtimeTarget\:\:JBoss\ v5.0/owners=jst.web\:2.5
+eclipse.preferences.version=1

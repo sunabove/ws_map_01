@@ -1,0 +1,217 @@
+BODY {
+	SCROLLBAR-FACE-COLOR: #bbc4cc; SCROLLBAR-HIGHLIGHT-COLOR: #ffffff; SCROLLBAR-SHADOW-COLOR: #aaaabb; SCROLLBAR-3DLIGHT-COLOR: #9999aa; SCROLLBAR-ARROW-COLOR: #ffffff; SCROLLBAR-TRACK-COLOR: #eeeeee; SCROLLBAR-DARKSHADOW-COLOR: #9999aa
+}
+TABLE {
+	FONT-SIZE: 12px; COLOR: #666666; LINE-HEIGHT: 16px; FONT-FAMILY: "µ¸¿ò","verdana"
+}
+TR {
+	FONT-SIZE: 12px; COLOR: #666666; LINE-HEIGHT: 16px; FONT-FAMILY: "µ¸¿ò","verdana"
+}
+TD {
+	FONT-SIZE: 12px; COLOR: #666666; LINE-HEIGHT: 16px; FONT-FAMILY: "µ¸¿ò","verdana"
+}
+TD {
+	FONT-SIZE: 12px; COLOR: #666666; LINE-HEIGHT: 16px; FONT-FAMILY: "µ¸¿ò","verdana"
+}
+
+INPUT {
+	FONT-SIZE: 12px; COLOR: #707070; FONT-FAMILY: "µ¸¿ò";
+}
+INPUT.org {
+	BORDER-RIGHT: #e9e9e9 1px solid; PADDING-RIGHT: 1px; BORDER-TOP: #e9e9e9 1px solid; PADDING-LEFT: 1px; FONT-SIZE: 12px; PADDING-BOTTOM: 1px; BORDER-LEFT: #e9e9e9 1px solid; COLOR: #707070; LINE-HEIGHT: 16px; PADDING-TOP: 1px; BORDER-BOTTOM: #e9e9e9 1px solid; FONT-FAMILY: "µ¸¿ò"; BACKGROUND-COLOR: white
+}
+A:link {
+	COLOR: #7e7e7e; FONT-FAMILY: verdana, µ¸¿ò; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #7e7e7e; FONT-FAMILY: verdana, µ¸¿ò; TEXT-DECORATION: none
+}
+A:active {
+	COLOR: #7e7e7e; FONT-FAMILY: verdana, µ¸¿ò; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #494949; FONT-FAMILY: verdana, µ¸¿ò; TEXT-DECORATION: none
+}
+A.sm:link {
+	FONT-SIZE: 9pt; COLOR: #2c51c6; FONT-FAMILY: µ¸¿ò,arial, helvetica; LETTER-SPACING: 0pt; TEXT-DECORATION: none
+}
+A.sm:visited {
+	FONT-SIZE: 9pt; COLOR: #2c51c6; FONT-FAMILY: µ¸¿ò,arial, helvetica; LETTER-SPACING: 0pt; TEXT-DECORATION: none
+}
+A.sm:active {
+	FONT-SIZE: 9pt; COLOR: #2c51c6; FONT-FAMILY: µ¸¿ò,arial, helvetica; LETTER-SPACING: 0pt; TEXT-DECORATION: none
+}
+A.sm:hover {
+	FONT-SIZE: 9pt; COLOR: #000066; FONT-FAMILY: µ¸¿ò,arial, helvetica; LETTER-SPACING: 0pt; TEXT-DECORATION: underline
+}
+TEXTAREA {
+	BORDER-RIGHT: #e9e9e9 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #e9e9e9 1px solid; PADDING-LEFT: 5px; FONT-SIZE: 12px; PADDING-BOTTOM: 5px; BORDER-LEFT: #e9e9e9 1px solid; COLOR: #707070; LINE-HEIGHT: 16px; PADDING-TOP: 5px; BORDER-BOTTOM: #e9e9e9 1px solid; FONT-FAMILY: "µ¸¿ò"; BACKGROUND-COLOR: white
+}
+.copy {
+	FONT-SIZE: 9pt; COLOR: #3d3d3d; FONT-FAMILY: "Verdana", "±¼¸²"; TEXT-DECORATION: none
+}
+A:link {
+	FONT-SIZE: 12px; COLOR: #7e7e7e; LINE-HEIGHT: 16px; FONT-FAMILY: "µ¸¿ò", "verdana"; TEXT-DECORATION: none
+}
+A:visited {
+	FONT-SIZE: 12px; COLOR: #7e7e7e; LINE-HEIGHT: 16px; FONT-FAMILY: "µ¸¿ò", "verdana"; TEXT-DECORATION: none
+}
+A:hover {
+	FONT-SIZE: 12px; COLOR: #494949; LINE-HEIGHT: 16px; FONT-FAMILY: "µ¸¿ò", "verdana"; TEXT-DECORATION: underline
+}
+.text1 {
+	FONT-SIZE: 9pt; COLOR: #464646; LINE-HEIGHT: normal; FONT-FAMILY: "µ¸¿ò"
+}
+.text2 {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; FONT-SIZE: 9pt; LINE-HEIGHT: 12px; FONT-FAMILY: "Verdana", "Georgia", "±¼¸²"
+}
+.text3 {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; FONT-SIZE: 9pt; LINE-HEIGHT: 12px; PADDING-TOP: 3px; FONT-FAMILY: "Verdana", "Georgia", "±¼¸²"
+}
+.box {
+	BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; FONT-SIZE: 9pt; BORDER-LEFT: 1px solid; BORDER-BOTTOM: 1px solid; FONT-FAMILY: "µ¸¿ò"
+}
+TABLE.cummunity03 {
+	BORDER-RIGHT: 0px; BORDER-TOP: 0px; BORDER-LEFT: 0px; WIDTH: 490px; BORDER-BOTTOM: 0px; BACKGROUND-COLOR: #b5b6b5; cellpadding: 0px
+}
+TABLE.cummunity03 TD {
+	BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: center
+}
+TABLE.cummunity03 TD.app {
+	BACKGROUND: #eaf0f4; WIDTH: 20%; HEIGHT: 22px; TEXT-ALIGN: center
+}
+TABLE.cummunity03 TD.keyW {
+	WIDTH: 70%; TEXT-ALIGN: center
+}
+TABLE.cummunity01 TD.bk {
+	PADDING-RIGHT: 12px; VERTICAL-ALIGN: top; BACKGROUND-REPEAT: no-repeat; HEIGHT: 167px; TEXT-ALIGN: right
+}
+TABLE.sbk TR {
+	BACKGROUND-POSITION: 50% bottom; BACKGROUND-IMAGE: url(../image/mem_06_img.gif); BACKGROUND-REPEAT: repeat-x; HEIGHT: 19px
+}
+TABLE.list TD {
+	VERTICAL-ALIGN: bottom; COLOR: #000000; HEIGHT: 18px; TEXT-ALIGN: center
+}
+TABLE.list TD.title {
+	PADDING-LEFT: 10px; TEXT-ALIGN: left
+}
+.line {
+	BORDER-LEFT-COLOR: black; BORDER-TOP-STYLE: solid; BORDER-TOP-COLOR: black; BORDER-BOTTOM: #9f9f9f 1px solid; BORDER-RIGHT-STYLE: solid; BORDER-LEFT-STYLE: solid; BORDER-RIGHT-COLOR: black
+}
+.text-link {
+	FONT-SIZE: 9pt; COLOR: #002325; FONT-FAMILY: "µ¸¿ò"; TEXT-DECORATION: none
+}
+TD.list {
+	FONT-SIZE: 9pt; COLOR: #666666; FONT-FAMILY: ±¼¸²; TEXT-DECORATION: none
+}
+TD.list2 {
+	PADDING-LEFT: 10px; FONT-SIZE: 9pt; MARGIN-LEFT: 10px; COLOR: #393939; FONT-FAMILY: ±¼¸²
+}
+TD.list1 {
+	FONT-WEIGHT: bolder; FONT-SIZE: 9pt; COLOR: #666666; FONT-FAMILY: ±¼¸²; TEXT-DECORATION: none
+}
+.td {
+	FONT-SIZE: 12px; COLOR: #7e7e7e; LINE-HEIGHT: 16px; FONT-FAMILY: "µ¸¿ò","verdana"
+}
+.list {
+	FONT-SIZE: 12px; COLOR: #7e7e7e; LINE-HEIGHT: 16px; FONT-FAMILY: "µ¸¿ò", "verdana"
+}
+.list A:link {
+	COLOR: #7e7e7e; TEXT-DECORATION: none
+}
+.list A:visited {
+	COLOR: #7e7e7e; TEXT-DECORATION: none
+}
+.list A:active {
+	COLOR: #7e7e7e; TEXT-DECORATION: none
+}
+.list A:hover {
+	COLOR: #494949; TEXT-DECORATION: underline
+}
+.tit {
+	FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #7e7e7e; LINE-HEIGHT: 16px; FONT-STYLE: normal; FONT-FAMILY: "µ¸¿ò"
+}
+.tit A:link {
+	COLOR: #727272; TEXT-DECORATION: none
+}
+.tit A:visited {
+	COLOR: #707070; TEXT-DECORATION: none
+}
+.tit A:active {
+	COLOR: #707070; TEXT-DECORATION: none
+}
+.tit A:hover {
+	COLOR: #000000; TEXT-DECORATION: underline
+}
+.textarea00 {
+	BORDER-RIGHT: #faf7e6 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #faf7e6 1px solid; PADDING-LEFT: 5px; FONT-SIZE: 12px; PADDING-BOTTOM: 5px; BORDER-LEFT: #faf7e6 1px solid; COLOR: #707070; LINE-HEIGHT: 16px; PADDING-TOP: 5px; BORDER-BOTTOM: #faf7e6 1px solid; FONT-FAMILY: "µ¸¿ò"; BACKGROUND-COLOR: white
+}
+.textarea01 {
+	BORDER-RIGHT: #e9e9e9 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #e9e9e9 1px solid; PADDING-LEFT: 5px; FONT-SIZE: 12px; PADDING-BOTTOM: 5px; BORDER-LEFT: #e9e9e9 1px solid; COLOR: #707070; LINE-HEIGHT: 16px; PADDING-TOP: 5px; BORDER-BOTTOM: #e9e9e9 1px solid; FONT-FAMILY: "µ¸¿ò"; BACKGROUND-COLOR: white
+}
+.textarea02 {
+	BORDER-RIGHT: #fdedda 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #fdedda 1px solid; PADDING-LEFT: 5px; FONT-SIZE: 12px; PADDING-BOTTOM: 5px; BORDER-LEFT: #fdedda 1px solid; COLOR: #707070; LINE-HEIGHT: 16px; PADDING-TOP: 5px; BORDER-BOTTOM: #fdedda 1px solid; FONT-FAMILY: "µ¸¿ò"; BACKGROUND-COLOR: white
+}
+.SELECT {
+	BORDER-RIGHT: #e9e9e9 1px solid; BORDER-TOP: #e9e9e9 1px solid; FONT-SIZE: 12px; BORDER-LEFT: #e9e9e9 1px solid; COLOR: #707070; LINE-HEIGHT: 16px; BORDER-BOTTOM: #e9e9e9 1px solid; FONT-FAMILY: "µ¸¿ò"; BACKGROUND-COLOR: #ffffff
+}
+.td {
+	FONT-SIZE: 12px; COLOR: #7e7e7e; LINE-HEIGHT: 16px; FONT-FAMILY: "µ¸¿ò","verdana"
+}
+.list {
+	FONT-SIZE: 12px; COLOR: #7e7e7e; LINE-HEIGHT: 16px; FONT-FAMILY: "µ¸¿ò", "verdana"
+}
+.list A:link {
+	COLOR: #7e7e7e; TEXT-DECORATION: none
+}
+.list A:visited {
+	COLOR: #7e7e7e; TEXT-DECORATION: none
+}
+.list A:active {
+	COLOR: #7e7e7e; TEXT-DECORATION: none
+}
+.list A:hover {
+	COLOR: #494949; TEXT-DECORATION: underline
+}
+.tit {
+	FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #7e7e7e; LINE-HEIGHT: 16px; FONT-STYLE: normal; FONT-FAMILY: "µ¸¿ò"
+}
+.tit A:link {
+	COLOR: #727272; TEXT-DECORATION: none
+}
+.tit A:visited {
+	COLOR: #707070; TEXT-DECORATION: none
+}
+.tit A:active {
+	COLOR: #707070; TEXT-DECORATION: none
+}
+.tit A:hover {
+	COLOR: #000000; TEXT-DECORATION: underline
+}
+.textarea00 {
+	BORDER-RIGHT: #faf7e6 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #faf7e6 1px solid; PADDING-LEFT: 5px; FONT-SIZE: 12px; PADDING-BOTTOM: 5px; BORDER-LEFT: #faf7e6 1px solid; COLOR: #707070; LINE-HEIGHT: 16px; PADDING-TOP: 5px; BORDER-BOTTOM: #faf7e6 1px solid; FONT-FAMILY: "µ¸¿ò"; BACKGROUND-COLOR: white
+}
+.textarea01 {
+	BORDER-RIGHT: #e9e9e9 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #e9e9e9 1px solid; PADDING-LEFT: 5px; FONT-SIZE: 12px; PADDING-BOTTOM: 5px; BORDER-LEFT: #e9e9e9 1px solid; COLOR: #707070; LINE-HEIGHT: 16px; PADDING-TOP: 5px; BORDER-BOTTOM: #e9e9e9 1px solid; FONT-FAMILY: "µ¸¿ò"; BACKGROUND-COLOR: white
+}
+.textarea02 {
+	BORDER-RIGHT: #fdedda 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #fdedda 1px solid; PADDING-LEFT: 5px; FONT-SIZE: 12px; PADDING-BOTTOM: 5px; BORDER-LEFT: #fdedda 1px solid; COLOR: #707070; LINE-HEIGHT: 16px; PADDING-TOP: 5px; BORDER-BOTTOM: #fdedda 1px solid; FONT-FAMILY: "µ¸¿ò"; BACKGROUND-COLOR: white
+}
+.SELECT {
+	BORDER-RIGHT: #e9e9e9 1px solid; BORDER-TOP: #e9e9e9 1px solid; FONT-SIZE: 12px; BORDER-LEFT: #e9e9e9 1px solid; COLOR: #707070; LINE-HEIGHT: 16px; BORDER-BOTTOM: #e9e9e9 1px solid; FONT-FAMILY: "µ¸¿ò"; BACKGROUND-COLOR: #ffffff
+}
+
+.input_01 {BORDER-RIGHT: #C3853C 1px solid; BORDER-TOP: #C3853C 1px solid; BORDER-LEFT: #C3853C 1px solid; BORDER-BOTTOM: #C3853C 1px solid; BACKGROUND-COLOR: #ffffff}
+
+.input_02 {BORDER-RIGHT: #386b18 1px solid; BORDER-TOP: #386b18 1px solid; BORDER-LEFT: #386b18 1px solid; BORDER-BOTTOM: #386b18 1px solid; BACKGROUND-COLOR: #ffffff}
+
+.input_03 {}
+
+.input_04 {BORDER-RIGHT: #ffffff 1px solid; BORDER-TOP: #ffffff 1px solid; BORDER-LEFT: #ffffff 1px solid; BORDER-BOTTOM: #ffffff 1px solid; BACKGROUND-COLOR: #ffffff}
+
+.button {BORDER-RIGHT: 0px; BORDER-TOP: 0px; BORDER-LEFT: 0px; WIDTH: 60px; BORDER-BOTTOM: 0px; HEIGHT: 18px}
+
+.input_button1 {BORDER-RIGHT: 0px; BORDER-TOP: 0px; BORDER-LEFT: 0px; BORDER-BOTTOM: 0px; HEIGHT: 18px};
+
+.button4 {BORDER-RIGHT: 0px; BORDER-TOP: 0px; BORDER-LEFT: 0px; WIDTH: 40px; BORDER-BOTTOM: 0px; HEIGHT: 22px};
+

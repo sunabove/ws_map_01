@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project PR100_GOODCOMMON">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="create_run_jar">
+        <jar destfile="D:/WS001_MAP/PR000_BASE/archive/PR100_GOODCOMMON.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Main-Class" value="com.ynhenc.comm.util.SystemUtil"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="D:/WS001_MAP/PR100_GOODCOMMON/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="D:/WS001_MAP/PR000_BASE/archive/PR000_BASE.jar"/>
+        </jar>
+    </target>
+</project>

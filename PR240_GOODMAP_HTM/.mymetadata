@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="PR240_GOODMAP_HTM"
+  id="myeclipse.1251878310468"
+  j2ee-spec="5.0"
+  archive="PR240_GOODMAP_HTM.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

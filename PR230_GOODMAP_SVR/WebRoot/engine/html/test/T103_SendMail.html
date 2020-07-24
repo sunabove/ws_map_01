@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+	<TITLE> GoodMap Viewer V10.00 </TITLE>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="imagetoolbar" content="no">
+	
+	<script>
+    	var myObj = window.dialogArguments;
+    </script>
+    
+    <script>
+    	function myMapLoad() {
+    		var iframe = document.getElementById("map");
+    		iframe.width = 500;
+    		iframe.height = 500;
+    		iframe.src = myObj.path;
+    		
+    	}
+    	
+    	function sendMail() {
+    		alert('Mail Send');
+    	}
+    	
+    	function dialogClose() {
+    		window.close();
+    	}
+    </script>
+    
+  </head>
+  
+  <body onload="myMapLoad();">
+  	<br/>
+  	<table>
+  		<tr>
+  			<td style="text-align: right">보내는 사람</td>
+  			<td><input type="text" name="from" style="width: 400"/></td>
+  		</tr>
+  		<tr>
+  			<td style="text-align: right">받는 사람</td>
+  			<td><input type="text" name="to" style="width: 400"/></td>
+  		</tr>
+  		<tr>
+  			<td style="text-align: right">제목</td>
+  			<td><input type="text" name="title" style="width: 400"/></td>
+  		</tr>
+  		<tr>
+  			<td style="text-align: right">이미지</td>
+  			<td><iframe 
+				id="map"
+				name="map"
+				src="about:blank" 
+				width="500"
+				height="500"
+				scrolling="no" 
+				frameborder="3" 
+			    style="border: 4 solid #919191; padding: 0; margin: 0; "
+			>
+			</iframe></td>
+  		</tr>
+  		<tr>
+  			<td style="text-align: right">내용</td>
+  			<td><textarea name="content" rows="4" cols="60"></textarea></td>
+  		</tr>
+  		<tr style="text-align: center">
+  			<td colspan="2">
+  				<input type="button" name="send" value="보내기" onclick="sendMail();" />
+  				<input type="button" name="cancel" value="취소" onclick="dialogClose();" />
+  			</td>
+  		</tr>
+  	</table> 
+  	
+  </body>
+</HTML>

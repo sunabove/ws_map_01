@@ -1,0 +1,533 @@
+package jchart;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.geom.*;
+import java.util.*;
+import jcosmos.*;
+
+/**
+ * Title:        java chart project
+ * Description:  jchart v1.0
+ * Copyright:    Copyright (c) Suhng ByuhngMunn
+ * Company:      JCOSMOS DEVELOPMENT
+ * @author Suhng ByuhngMunn
+ * @version 1.0
+ */
+
+public class GraphExtent extends ChartElement {
+
+
+
+  private boolean threeDimFrameJustified ;
+
+  public GraphExtent(SpreadSheet sheet, ChartElement parent, Shape shape, ShapeStyle style) {
+
+     super(sheet, parent, shape, null ); // set style null anyway
+
+     getChartType().setGraphExtent( this );
+
+  }
+
+  public ChartElement cloneSelf(ChartElement parent, SpreadSheet sheet) {
+
+     ShapeAndStyle sns = cloneShapeAndShapeStyle();
+
+     ChartElement element = new GraphExtent( sheet, parent, sns.getShape(), sns.getStyle() );
+
+     return element;
+
+  }
+
+  public void paintSelected(Graphics2D g2) {
+
+     ChartType ct = getChartType();
+
+     if( ct instanceof ChartType3D ) {
+
+//	Rectangle [] marks = super.getSelectedMarksMiddleOnBoundary( getShape().getBounds() );
+//
+//	g2.setColor( Color.black );
+//
+//	for( int i = 0, len = marks.length ; i < len ; i ++ ) {
+//
+//	  if( marks[ i ] == null ) {
+//
+//	    continue;
+//
+//	  }
+//
+//	  g2.fill( marks[ i ] );
+//
+//	}
+
+	ChartElement pe = getPictureExtent();
+
+	pe.paintSelected( g2 );
+
+     } else {
+
+	ChartElement pe = getPictureExtent();
+
+	pe.paintSelected( g2 );
+
+     }
+
+  }
+
+  public Rectangle [] getSelectedMarks() {
+
+    ChartElement pe = getPictureExtent();
+
+    return pe.getSelectedMarks();
+
+  }
+
+  public void paintMoveMode(Graphics2D g2, int x, int y) {
+
+    Shape moveShape = getMoveShape();
+
+    super.paintMoveMode(g2, x, y, moveShape );
+
+    ChartElement pe = getPictureExtent();
+
+    pe.paintMoveMode( g2, x, y);
+
+  }
+
+  private Shape getMoveShape() {
+
+    Chart chart = getChart();
+
+    DataTable dataTable = (DataTable) chart.getChartElement( DataTable.class );
+
+    Shape moveShape = null;
+
+    if( dataTable == null ) {
+
+      moveShape = getShape();
+
+    } else {
+
+      Rectangle geArea = getShape().getBounds();
+
+      Rectangle dtArea = dataTable.getDataTableShape().getBounds();
+
+      moveShape = new Rectangle( dtArea.x, geArea.y, dtArea.width, dtArea.y + dtArea.height - geArea.y );
+
+    }
+
+    return moveShape;
+
+  }
+
+  public Shape getResizeShape(){
+
+	  return getArea();
+
+ }
+
+//  public void paintResizeMode(Graphics2D g2, int tx, int ty, int topology) {
+//
+//    super.paintResizeMode( g2, tx, ty, topology );
+//
+//    ChartElement pe = getPictureExtent();
+//
+//    pe.paintResizeMode( g2, tx, ty, topology);
+//
+//  }
+
+  public Rectangle getArea() {
+
+    Chart chart = getChart();
+
+    DataTable dataTable = (DataTable) chart.getChartElement( DataTable.class );
+
+    if( dataTable == null ) {
+
+      return super.getArea();
+
+    }
+
+    Rectangle area = super.getArea();
+
+    Rectangle dtArea = dataTable.getArea();
+
+    return new Rectangle( dtArea.x, area.y, dtArea.width, dtArea.y + dtArea.height - area.y );
+
+  }
+
+  public void setXorShape(Shape shape) {
+
+    super.setXorShape( shape );
+
+    if( shape == null ) {
+
+       ChartElement pa = getChartElement(PictureExtent.class );
+
+       pa.setXorShape( null );
+
+    }
+
+  }
+
+  public void paint(Graphics2D g2 ) {
+
+      ChartType ct = getChartType();
+
+      if( ct instanceof ChartType3D ) {
+
+	 paint3D( g2 );
+
+      } else {
+
+	 super.paint( g2 );
+
+      }
+
+  }
+
+  public void justifyThreeDimFrame( PictureExtent pictureExtent ) {
+
+      ChartType ct = getChartType();
+
+      if( ct.isChartTypeCircle3D() ) {
+
+	 justifyCircleThreeDimFrame( pictureExtent );
+
+      } else {
+
+	 justifyGeneralThreeDimFrame( pictureExtent );
+
+      }
+
+  }
+
+  private void justifyCircleThreeDimFrame( PictureExtent pe ) {
+
+      final Rectangle area = pe.getArea();
+
+      int w = area.width;
+
+      ChartType ct = getChartType();
+
+      double [] radiusAndThickness = ct.getRadiusAndThicknessOf3DCircle( pe );
+
+      double radius = radiusAndThickness[ 0 ];
+      double thickness = radiusAndThickness[ 1 ];
+
+      int h = (int) ( radius + thickness );
+
+      int dy = (int) ( (area.height - h)/2.0 );
+
+      Utility.debug(this, "PRE H = " + area.height + ", CURR H = " + h + ", DY = " + dy );
+
+      if( h != area.height ) {
+
+	pe.resizeAndMoveBy( w, h, 0, dy );
+
+	synchronizeToPictureExtentShape();
+
+      }
+
+  }
+
+  public void synchronizeToPictureExtentShape() {
+
+    this.setShape( ShapeUtilities.getShapeCloned( getPictureExtent().getShape() ) );
+
+  }
+
+  private void justifyGeneralThreeDimFrame( PictureExtent pe ) {
+
+     final Shape shape = this.getShape();
+
+     Rectangle2D geArea = shape.getBounds2D();
+
+     Insets insets = pe.getInsets();
+
+     double width = geArea.getWidth() - insets.left - insets.right;
+     double height = geArea.getHeight() - insets.top - insets.bottom;
+
+     ItemAxis itemAxis = getItemAxis();
+     ValueAxis valueAxis = getValueAxis();
+
+     ChartType ct = getChartType();
+
+     ChartElement xAxis = ( ( ct instanceof HorizontalChartType ) ? (ChartElement) valueAxis : itemAxis );
+     ChartElement yAxis = ( ( ct instanceof HorizontalChartType ) ? (ChartElement) itemAxis : valueAxis );
+
+     double theta = pe.getThetaRadian();
+     double phi   = pe.getPhiRadian();
+
+     if( xAxis != null && phi >= 0 ) {
+
+	height -= xAxis.getHeight();
+
+     }
+
+     if( yAxis != null ) {
+
+	width -= yAxis.getWidth();
+
+     }
+
+     double depth3DRatio = pe.getDepth3DRatio()/100.0;
+     Chart chart = getChart();
+     ChartData cd = chart.getChartData();
+     DataSeries [] dss = cd.getDataSeries();
+
+     double dsNum = (dss.length < 1 ) ? 1 : dss.length ; // data series number
+
+     double alpha = (1.0/dsNum)*depth3DRatio*Math.abs( Math.sin( theta ) ); // alpha
+
+     double pw = width / ( 1.0 + alpha ) ;
+     double ph = height - pw/dsNum*depth3DRatio*Math.abs( Math.sin( phi ) );
+
+     double x = geArea.getX() + geArea.getWidth() - insets.right - pw;
+
+     x -= ( theta >= 0 ? pw*alpha : ( yAxis == null ? 0 : yAxis.getArea().width ) );
+
+     double y;
+
+     if( phi >= 0 ) {
+
+	y = geArea.getY() + geArea.getHeight() - insets.bottom - ph;
+
+	if( xAxis != null ) {
+
+	  y -= xAxis.getHeight();
+
+	}
+
+     } else {
+
+	y = geArea.getY() + insets.top;
+
+     }
+
+     Rectangle2D peBounds = pe.getShape().getBounds2D();
+
+     if(    Math.abs( peBounds.getX() - x ) > 1
+	 || Math.abs( peBounds.getY() - y ) > 1
+	 || Math.abs( peBounds.getWidth() - pw ) > 1
+	 || Math.abs( peBounds.getHeight() - ph ) > 1 )
+     {
+	  pe.resizeAndMoveBy( (int) pw,
+			      (int) ph,
+			      (int) ( x - peBounds.getX() ),
+			      (int) ( y - peBounds.getY() )
+			   );
+
+	  if( xAxis != null ) {
+
+	      Rectangle xAxisArea = xAxis.getArea();
+
+	      xAxis.resizeAndMoveBy( (int) pw,
+				     xAxisArea.height,
+				     (int) ( x - xAxisArea.x ),
+				     (int) ( y + ph - xAxisArea.y)
+				   );
+	  }
+
+	  if( yAxis != null ) {
+
+	      Rectangle yAxisArea = yAxis.getArea();
+
+	      int dx;
+
+	      if( theta < 0 ) {
+
+		dx = (int) ( x + pw - yAxisArea.x );
+
+	      } else {
+
+		dx = (int) ( x - yAxisArea.width - yAxisArea.x );
+
+	      }
+
+	      yAxis.resizeAndMoveBy( yAxisArea.width,
+				     (int) ph,
+				     dx,
+				     (int) ( y - yAxisArea.y)
+				   );
+
+	  }
+
+     }
+
+  }
+
+  public boolean contains(double x, double y) {
+
+     ChartType ct = getChartType();
+
+    if( ct instanceof ChartType3D ) {
+
+	return get3DArea().contains( x, y );
+
+    } else {
+
+	return super.contains( x, y );
+
+    }
+
+  }
+
+  public Shape get3DArea() {
+
+      PictureExtent pictureExtent = (PictureExtent) getChartElement( PictureExtent.class );
+
+      Area pictureExtent3DArea = new Area( pictureExtent.get3DArea() );
+
+      pictureExtent3DArea.add( new Area( getShape() ) );
+
+      return pictureExtent3DArea.getBounds2D();
+
+  }
+
+  public void paint3D(Graphics2D g2) {
+
+      PictureExtent pictureExtent = getPictureExtent();
+
+      justifyThreeDimFrame( pictureExtent );
+
+      Point2D projectedPoint = pictureExtent.getProjectionVector();
+
+      double proX = projectedPoint.getX();
+      double proY = projectedPoint.getY();
+
+      // 프로젝션 포인트의 수직 값이 양이면 아이템 엑시스를 그리지 않는다.
+      // 그냥, 이차원 페인트로 대치하면 된다.
+      // 수직 값이 양이면, 아이템 엑시스를 체크하여 그리지 않는다.
+
+      if( proY <= 0 ) {
+
+	  super.paint( g2 );
+
+	  return;
+
+      }
+
+      super.paintSelf( g2 );
+
+      Enumeration enumIt = childs.elements();
+
+      while( enumIt.hasMoreElements() ) {
+
+	   ChartElement ce = ((ChartElement) enumIt.nextElement());
+
+	   if( ! ( ce instanceof ItemAxis ) ) { // 아이템 엑시스 빼고 다 그림
+
+	      ce.paint( g2 );
+
+	   }
+
+      }
+
+   }
+
+  private PictureExtent getPictureExtent() {
+
+     return (PictureExtent) getChartElement( PictureExtent.class );
+
+  }
+
+  public void paint3DWireFrameMovedBy(Graphics2D g2, int x, int y, boolean onTheFrontPlane) {
+
+     PictureExtent pe = getPictureExtent();
+
+     int dir = onTheFrontPlane ? -1 : 1;
+
+     pe.paint3DWireFrameMovedBy( g2, x, y, dir );
+
+  }
+
+  public void paintAndSet3DWireFrameMovedBy(Graphics2D g2, int x, int y, boolean onTheFrontPlane ) {
+
+     PictureExtent pe = getPictureExtent();
+
+     int dir = onTheFrontPlane ? -1 : 1;
+
+     // 프레임 변화 시킴
+     pe.paintAndSet3DWireFrameMovedBy( g2, x, y, dir );
+     // 끝. 프레임 변화
+
+  }
+
+//  public void reLocateItemAxisAndValueAxis() {
+//
+//     PictureExtent pe = getPictureExtent();
+//
+//     // 현재 프로젝션 포인트
+//     Point2D projectedPoint= pe.getProjectionVector();
+//
+//     double proX = projectedPoint.getX();
+//     double proY = projectedPoint.getY();
+//
+//     ItemAxis itemAxis = getItemAxis();
+//     ValueAxis valueAxis = getValueAxis();
+//
+//     if( itemAxis == null || valueAxis == null ) {
+//
+//	pe.moveBy( 0, 0 ); // to just re set shapes 3D
+//
+//	return;
+//
+//     }
+//
+//     ChartType ct = getChartType();
+//
+//     ChartElement xAxis = ( ( ct instanceof HorizontalChartType ) ? (ChartElement) valueAxis : itemAxis );
+//     ChartElement yAxis = ( ( ct instanceof HorizontalChartType ) ? (ChartElement) itemAxis : valueAxis );
+//
+//     Rectangle area = getArea();
+//
+//     int gx = area.x; // graph extent x
+//     int gy = area.y; // graph extent y
+//
+//     Rectangle peArea = pe.getArea(); // picture extent area
+//
+//     Rectangle xAxisArea = xAxis.getArea(); // 수평 아이템
+//     Rectangle yAxisArea = yAxis.getArea();  // 수직 아이템
+//
+//     if( proX >= 0 ) {
+//
+//	 yAxis.moveBy( gx - yAxisArea.x, 0 );
+//
+//	 xAxis.moveBy( gx + yAxisArea.width - xAxisArea.x, 0 );
+//
+//	 pe.moveBy( gx + yAxisArea.width - peArea.x, 0 );
+//
+//     } else {
+//
+//	 int intProX = (int) Math.abs( Math.round( proX ) );
+//
+//	 pe.moveBy( gx + intProX - peArea.x, 0 );
+//
+//	 yAxis.moveBy( gx + intProX + peArea.width - yAxisArea.x, 0 );
+//	 xAxis.moveBy( gx + intProX - xAxisArea.x, 0 );
+//
+//     }
+//
+//  }
+
+  public ItemAxis getItemAxis() {
+
+     return (ItemAxis) getChartElement( ItemAxis.class );
+
+  }
+
+  public ValueAxis getValueAxis() {
+
+     return (ValueAxis) getChartElement( ValueAxis.class );
+
+  }
+
+  public String toString() {
+
+     return "그래프 영역";
+
+  }
+
+}

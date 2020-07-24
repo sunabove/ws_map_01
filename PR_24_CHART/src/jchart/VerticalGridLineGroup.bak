@@ -1,0 +1,26 @@
+package jchart;
+
+/**
+ * Title:        java chart project
+ * Description:  jchart v1.0
+ * Copyright:    Copyright (c) Suhng ByuhngMunn
+ * Company:      JCOSMOS DEVELOPMENT
+ * @author Suhng ByuhngMunn
+ * @version 1.0
+ */
+
+import java.awt.*;
+
+public class VerticalGridLineGroup extends GridLineGroup {
+
+  public VerticalGridLineGroup(SpreadSheet sheet, ChartElement parent, Shape shape, ShapeStyle style) {
+      super(sheet, parent, shape, style );
+  }
+
+  public String toString() {
+
+    return "";
+
+  }
+
+}

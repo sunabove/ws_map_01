@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="imagetoolbar" content="no"/>
+<LINK REL="SHORTCUT ICON" HREF="../../favicon.ico"/>
+
+<title>MapControl V1.0.004  </title>
+
+<link rel="stylesheet" type="text/css" href="../css/css_003_GoodMapControl.css"></link>
+
+<script type="text/javascript">
+
+var mapSvrHostName = "211.236.93.75" ;
+var mapSvrPortNo   = "80" ; 
+
+var initMapX = 243815.56 ;
+var initMapY = 165388.16 ;
+
+var initMapWidth = 1024;
+var initMapHeight = 768;
+
+var initMapNo = 0;
+
+// background logo image url 
+var initLogoImage = '0' ;
+// map scale bar on off
+var initScaleBar = 0;
+// map compass on off
+var initCompass = 0; 
+
+function bodyOnLoad() {
+     goodMapOnLoad(); 
+}
+
+</script>
+
+<script type="text/javascript" src="../js/js_005_ext-2.2/adapter/prototype/prototype_1.6.1.js"></script> 
+<script type="text/javascript" src="../js/js_004_scriptaculous/scriptaculous.js"></script> 
+
+<script type="text/javascript" src="../js/js_003_map/js01_mapCommon.js"></script>
+<script type="text/javascript" src="../js/js_003_map/js02_mapControl.js"></script>   
+
+</head>
+
+<body onload="javascript: bodyOnLoad(); " style="width: 100%; height: 100%; " >
+<div id="topPaneMapControl" class="topPaneMapControl" style="width: 100% ; height: 100%;" >
+    <div id="mapPane" style="position: absolute; top: 0 ; left: 0; width: 100% ; height: 100%; " >
+	    <div id="mapCellPane" class="mapCellPane"
+	       style="position: absolute; top: 0 ; left: 0; width: 100% ; height: 100%; z-index: 10; " >
+			<img id="mapImage" class="mapImage" style="cursor:hand; "
+			    width = "1024" height="768"
+			            border="0" 
+			            align="absmiddle"
+			            src="../image/map/white.png"
+			            ondragend="" 
+			            onload="javascript: mapImage_OnLoad(); "
+			            onerror="javascript: setLoadingLogoVisible( false ); " 
+			/>
+		</div>
+	</div>
+	<div id="mapCompassPane" 
+	   style="position: absolute; top: 6 ; left: 6 ; z-index: 20; cursor:move; visibility:hidden; "
+	>
+        <img src="../image/map/mapCompass_05.gif" border="0" width="60" height="60" align="absmiddle" />
+    </div>
+    <div id="mapScalePane" class="mapScalePane" 
+        style="maring: 0; padding: 0; position: absolute; top: 718 ; left: 0 ; z-index: 20; cursor:hand; visibility:hidden; "          
+    >
+        <li class="mapScale" ><span id="mapScaleVal" style="background: ThreeDFace; "></span></li>
+        <li class="mapScale" ><img id="mapScaleBarImg" src="../image/map/mapScale_02.gif" border="0" align="absmiddle" /></li>
+    </div>	
+    <div id="zoomLogoPane" style="position: absolute; left: 0; top: 0; z-index: 22; visibility: hidden;">
+	    <img src="../image/ajax-loader/grid-loading.gif" />
+	</div>
+	<div id="zoomInLogoPane" style="position: absolute; left: 0; top: 0; z-index: 22; visibility: hidden;">
+        <img src="../image/map/mousewheel_zoomin.gif" />
+    </div>
+    <div id="zoomOutLogoPane" style="position: absolute; left: 0; top: 0; z-index: 22; visibility: hidden;">
+        <img src="../image/map/mousewheel_zoomout.gif" />
+    </div>
+    
+</div>
+<div id="loadingLogoPane" style="position: absolute; left: 0; top: 0; z-index: 1; visibility: hidden;">
+    <img src="../image/loading_map.gif" width="50" height="50"/>
+</div>
+
+<form id="mainForm">
+
+    <input type="hidden" name="mapNo" value="" />
+    
+    <input type="hidden" name="width" value="1024" />
+    <input type="hidden" name="height" value="768" />
+
+    <input type="hidden" name="mapX" value="243815.56" />
+    <input type="hidden" name="mapY" value="165388.16" />
+
+    <input type="hidden" name="minX" value="216722.23" />
+    <input type="hidden" name="minY" value="145068.16" />
+
+    <input type="hidden" name="maxX" value="270908.9" />
+    <input type="hidden" name="maxY" value="185708.16" />
+
+    <input type="hidden" name="zoomLevelMax" value="8" />
+    <input type="hidden" name="zoomLevelCurr" value="8" />
+
+    <input type="hidden" name="mapImgUrl" value="" />
+
+    <input type="hidden" name="format" value="" />
+
+    <input type="hidden" name="circleMapX" value="" />
+    <input type="hidden" name="circleMapY" value="" />
+    <input type="hidden" name="circleRadius" value="" />
+
+    <input type="hidden" name="srchLayerName" value="" />
+    <input type="hidden" name="srchColName" value="" />
+    <input type="hidden" name="srchColValue" value="" />
+    <input type="hidden" name="srchLayerLineColor" value="" />
+    <input type="hidden" name="srchLayerFillColor" value="" />
+    <input type="hidden" name="srchLayerTextColor" value="" />
+    <input type="hidden" name="srchLayerLineWidth" value="" />
+
+    <input type="hidden" name="coordLayerName" value="" />
+
+    <input type="hidden" name="poiLayerName" value="" />
+    <input type="hidden" name="poiType" value="0" />
+    <input type="hidden" name="poiId" value="" />
+    <input type="hidden" name="poiMapX" value="" />
+    <input type="hidden" name="poiMapY" value="" />
+    <input type="hidden" name="poiMapX1" value="" />
+    <input type="hidden" name="poiMapY1" value="" />
+    <input type="hidden" name="poiLabel" value="" />
+    <input type="hidden" name="poiTextColor" value="" />
+    <input type="hidden" name="poiIcon" value="" />
+    <input type="hidden" name="poiLineWidth" value="" />
+    <input type="hidden" name="poiLineColor" value="" />
+
+    <input type="hidden" name="clearSearch" value="" />
+    <input type="hidden" name="removeAllPoiList" value="" />
+    
+    <input type="hidden" name="removeLayerName" value="" />
+    <input type="hidden" name="removeShapeId" value="" />
+
+    <input type="hidden" name="debug" value="" />
+    <input type="hidden" name="loadingLogo" value="" />
+</form>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+
+<HEAD>
+<TITLE> GoodMap Loader V1.0.01 </TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="imagetoolbar" content="no">
+
+<script>
+
+function showAllStation(){
+	
+	map.setMapLevel( 3 );
+	
+	var mbr = map.getMbr();
+	alert(mbr.minX);
+}
+
+var poiId = 100;
+
+function testDoAddPoi() {
+	var poi = {
+	   "id" : poiId ,
+	   "layerName" : "abcd" ,
+	   "label" : "def" ,
+	   "icon" : "man.gif" ,
+	   "mapX" : 242145 ,
+	   "mapY" : 163015 ,
+	   "textColor" : "#FF00CC" ,
+	   "a" : ""
+	};
+	
+	poiId ++ ;
+	
+	map.doAddPoi( poi );
+	
+	map.setMapLocation( poi.mapX, poi.mapY );
+	
+	map.mapRefresh();
+}
+
+
+
+</script>
+
+</HEAD>
+
+<BODY onload="mapLoader.submit();" >
+
+<input type="button" value="POI 추가" onclick="testDoAddPoi();"> <br/>
+
+<iframe 
+	id="map"
+	name="map"
+	src="about:blank" 
+	width="800"
+	height="800"
+	scrolling="no" 
+	frameborder="3" 
+	style="border: 4 solid #919191; padding: 0; margin: 0; "
+>
+</iframe>
+
+<form 
+	id="mapLoader" 
+	target="map" 
+	method="get"
+	action="http://localhost:8080/PR230_GOODMAP_SVR/engine/jsp/M020_MapControlProxy.jsp"
+>
+	hostName: <input type="text" name="mapSvrHostName" value="211.236.93.80" />
+	<input type="hidden" name="mapSvrPortNo" value="80" />
+	<input type="hidden" name="width" value="800" />
+	<input type="hidden" name="height" value="800" />
+	<input type="hidden" name="mapX" value="242145" />
+	<input type="hidden" name="mapY" value="163015" />
+	<input type="hidden" name="zoomLevelCurr" value="9" />
+	<input type="hidden" name="logoImage" value="http://www.suncheon.go.kr/images/images_www/main_new/logo.gif" />
+	<input type="hidden" name="compass" value="0" />
+	<input type="hidden" name="scaleBar" value="0" />
+	mapNo: <input type="text" name="mapNo" value="0" />
+	
+	<input type="submit" value="go" />
+	
+</form>
+
+</BODY>
+
+</HTML>

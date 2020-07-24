@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+      <cheatsheet
+            name="Title"
+            contentFile="$nl$/cheat_sheet.xml"
+            composite="false"
+            id="PR_91_TEST.cheatsheet1241511488">
+      </cheatsheet>
+   </extension>
+
+</plugin>

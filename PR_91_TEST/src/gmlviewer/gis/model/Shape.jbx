@@ -1,0 +1,15 @@
+[PropertyInfo]
+area,double,false,false, , ,true,<default>
+geoPoints,gmlviewer.gis.model.Pnt[],false,false, , ,true,<default>
+length,double,false,false, , ,true,<default>
+lyr,gmlviewer.gis.model.Lyr,false,false, , ,true,<default>
+proj,gmlviewer.gis.model.Project,false,false, , ,false,<default>
+shape,java.awt.Shape,false,false, , ,true,<default>
+shapeAttribute,gmlviewer.gis.model.ShapeAttribute,false,false, , ,false,<default>
+shapeGeom,gmlviewer.gis.model.Geometry,false,false, , ,false,<default>
+sid,int,false,false, , ,true,<default>
+[IconNames]
+
+
+
+

@@ -1,0 +1,2117 @@
+<!-- 전자지도 v1.0 2005년 3월 2일 11시 10분-->
+<html>
+	<head>
+		<title>디지털성남문화대전 - 전자지도</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+		<link rel="stylesheet" href="$__torms.css" type="text/css">
+
+		<script>
+
+var mode = "edu_call";
+
+// 끌기에서 사용
+var mdown = false;		// 다운?
+var mx, my;				// 다운된 좌표
+var mdx, mdy;			// 마우스가 움직인 거리
+
+// pan, zoomin, zoomout 의 이벤트를 처리하기 위한
+// layer 의 toplevel값
+var toplevel = 20;
+var m_toplevel = 20;	// 메뉴 레이어
+
+// status에 보여주는 안내 메세지
+var mouse_pos_msg="";
+var user_guide_msg="";
+var user_guide_oldmsg="";
+
+// Gu, Dong 리스트
+// new Gu(참조번호, 구);
+GuArray = new Array(
+	new Gu(0, "분당구"),
+	new Gu(1, "수정구"),
+	new Gu(2, "중원구")
+);
+
+// new Dong(참조번호, 구 참조번호 , 동);
+DongArray = new Array(
+new Dong(41135114, 0, "구미동"),
+new Dong(41135112, 0, "궁내동"),
+new Dong(41135111, 0, "금곡동"),
+new Dong(41135116, 0, "대장동"),
+new Dong(41135113, 0, "동원동"),
+new Dong(41135110, 0, "백현동"),
+new Dong(41135101, 0, "분당동"),
+new Dong(41135109, 0, "삼평동"),
+new Dong(41135105, 0, "서현동"),
+new Dong(41135117, 0, "석운동"),
+new Dong(41135102, 0, "수내동"),
+new Dong(41135107, 0, "야탑동"),
+new Dong(41135115, 0, "운중동"),
+new Dong(41135104, 0, "율동"),
+new Dong(41135106, 0, "이매동"),
+new Dong(41135103, 0, "정자동"),
+new Dong(41135108, 0, "판교동"),
+new Dong(41135118, 0, "하산운동"),
+
+new Dong(41131112, 1 , "고등동"),
+new Dong(41131116, 1 , "금토동"),
+new Dong(41131104, 1 , "단대동"),
+new Dong(41131114, 1 , "둔전동"),
+new Dong(41131107, 1 , "복정동"),
+new Dong(41131117, 1 , "사송동"),
+new Dong(41131105, 1 , "산성동"),
+new Dong(41131113, 1 , "상적동"),
+new Dong(41131103, 1 , "수진동"),
+new Dong(41131115, 1 , "시흥동"),
+new Dong(41131109, 1 , "신촌동"),
+new Dong(41131101, 1 , "신흥동"),
+new Dong(41131111, 1 , "심곡동"),
+new Dong(41131106, 1 , "양지동"),
+new Dong(41131110, 1 , "오야동"),
+new Dong(41131108, 1 , "창곡동"),
+new Dong(41131102, 1 , "태평동"),
+
+new Dong(41133108, 2 , "갈현동"),
+new Dong(41133103, 2 , "금광동"),
+new Dong(41133107, 2 , "도촌동"),
+new Dong(41133105, 2 , "상대원동"),
+new Dong(41133101, 2 , "성남동"),
+new Dong(41133106, 2 , "여수동"),
+new Dong(41133104, 2 , "은행동"),
+new Dong(41133102, 2 , "중동"),
+new Dong(41133109, 2 , "하대원동")
+);
+
+function Gu(id, gu) {
+	this.id = id;
+	this.gu = gu;
+}
+
+function Dong(id, gu, dong) {
+	this.id = id;
+	this.gu = gu;
+	this.dong = dong;
+}
+
+function get_obj(id){
+	 return document.getElementById( id ); 
+}
+
+function get_value(id){
+	 var obj = get_obj( id );
+	 if( obj != null ) {
+	 	return obj.value;
+	 } else {
+	 	alert( "null object = " + id );	 	
+	 	return "";
+	 }
+}
+
+function set_value(id, val){
+	var obj = get_obj( id );
+	if( obj != null ) {
+		obj.value = val;  
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function main_form_submit(a){
+	var obj = get_obj( 'MAIN_FORM' );
+
+	if( obj != null ) { 
+		obj.submit();
+	} else {
+		alert( "submit is skipped!" );
+	}
+}
+
+function command( a ) {
+	set_value( 'cmd', a );
+}
+
+function set_mode( a ) {
+  mode = a;
+  
+  if (mode == "pan"){mouse_cursor_move();}  
+  else if (mode == "zoom_in") {mouse_cursor_zoomin();}
+  else if (mode == "zoom_out") {mouse_cursor_zoomout();}
+  else {document.all.map.style.cursor= "url(images/Hand.cur)";}
+}
+
+function set_level( level ) {
+   command( "level" );
+   set_value( "level", level );
+   main_form_submit( "" );
+}
+
+function pan( dir ) {
+  command( "pan" );
+  set_value( "cmd_para", dir );
+  main_form_submit( "" );
+}
+
+function search( ) {
+  command( "search" );
+  main_form_submit( '' );
+}
+
+function process_mouse_click( a ) {
+   var curr_level = parseInt(document.all.level.value);
+   if( event.ctrlKey ) {
+      call_test_poi();
+   } else if( mode == "pan" ) {
+	if( call_edu_content( a ) ) {         
+	} else {
+		pan_click( a );
+	}
+   } else if( mode == "zoom_in" && curr_level > 1) {
+      zoom_in();      
+   } else if( mode == "zoom_out" && curr_level < 10) {
+      zoom_out();
+   } else if( mode == "edu_call" ) {
+      if( call_edu_content( a ) ) {         
+      } else {
+         pan_click( a );
+      }
+   }
+}
+
+function is_on_poi_pnt( x, y ) {
+   var poi_x = get_poi_x( );
+   var poi_y = get_poi_y( );
+   //alert( x + ", " + poi_x );
+   //alert( y + ", " + poi_y );
+   var dx = poi_x - x;
+   var dy = poi_y - y;
+   var m = 15;
+   if( dx > - m && dx < m && dy > - m - 10 && dy < m ) {
+      return true;
+   } else {
+      return false;
+   }
+   
+}
+
+function get_poi_x( ) {
+   var xt = get_value( "poi_x" );
+   if( xt != null && xt != "" ) {
+      return parseInt( xt );
+   } else {
+      return -10000;
+   }
+}
+
+function get_poi_y( i ) {
+   var xt = get_value( "poi_y" );
+   if( xt != null && xt != "" ) {
+      return parseInt( xt );
+   } else {
+      return -100000;
+   }
+}
+
+function encode( a ) {
+   return escape( a );
+}
+
+function call_edu_content( a ) {
+//alert( "call edu content = " + gis_url );
+   var x = event.offsetX;
+   var y = event.offsetY;
+   var on = is_on_poi_pnt( x, y );
+   //alert( on );
+   if( on ) {
+      if( true ) {
+        var sigbyulja = get_value( 'poi_name' );
+        sigbyulja = encodeURI( sigbyulja );
+        
+        set_value( 'gis', sigbyulja );	
+        var obj = get_obj( 'EDU_CALL_FORM' );
+        if( obj != null ) {
+        	if( opener != null ) {
+        		obj.target = "mapwin";
+        		obj.submit();
+        	} else {
+		       obj.submit();
+		}
+	} else {
+		alert( "submit is skipped!" );
+	}
+	return true;
+      } else {
+         alert( "cannot call chron content = " + a );
+         return false;
+      }
+      return true;
+   } else {
+      return false;
+   }
+   //window.open( gis_url );
+}
+
+function call_test_poi() {
+   var data = "계원예술고등학교"
+   set_value( "poi_name", data );
+   main_form_submit( "" );
+}
+
+function pan_click( a ) {
+	var mouseup = MapMouseUp(a);		// 이동되었을때의 처리
+	if (mouseup || mdown)
+		return;		
+	
+  var x = event.offsetX;
+  var y = event.offsetY;
+  var para = '' + x + ',' + y;
+  //alert( "" + event.srcElement.width + ", " + event.srcElement.height + ", " + x + ", " + y );
+  command( "pan" );
+  set_value( "cmd_para", para );
+  main_form_submit( "" );  
+}
+
+function set_mouse_pos_para() {
+  var x = event.offsetX;
+  var y = event.offsetY;
+  var para = '' + x + ',' + y;
+  set_value( "cmd_para", para );
+}
+
+function zoom_in( ) {
+  set_mouse_pos_para();
+  command( "zoom_in" );
+  main_form_submit( "" );
+}
+
+function zoom_out( ) {
+  set_mouse_pos_para();
+  command( "zoom_out" );
+  main_form_submit( "" );
+}
+
+function get_view_level() {
+  var view_level = parseInt( get_value("level") );
+  return view_level;
+}
+
+function zoom_left() {
+ var view_level = get_view_level();
+ view_level = view_level - 1;
+ if( view_level > 10 ) { view_level = 10 ; } 
+ if( view_level < 1 ) { view_level = 1 ; }
+ //alert( view_level );  
+ set_level( view_level );
+}
+
+function zoom_right() {
+ var view_level = get_view_level();
+ view_level = view_level + 1;
+ if( view_level > 10 ) { view_level = 10 ; } 
+ if( view_level < 1 ) { view_level = 1 ; }
+ //alert( view_level );  
+ set_level( view_level );
+}
+
+function view_all() {
+  set_level( 10 );
+}
+
+// 페이지가 로드되었을때 세팅해야 할 값
+function init_setting()
+{
+	// 선택된 레벨 하이라이트 이미지
+	active_level_image();
+	
+	// 사용자 호출 기능의 mode 유지
+	var user_mode = document.all.cmd.value;
+	if (user_mode == "pan") { 
+		set_mode('pan');
+		user_guide_oldmsg = "";
+		user_guide_msg = "지도를 클릭하면 중심점으로 이동합니다.";
+	 }
+	else if (user_mode == "zoom_in") { 
+		set_mode('zoom_in');
+		user_guide_oldmsg = "";
+		user_guide_msg = "지도를 클릭하면 중심점으로 확대합니다.";
+	}
+	else if (user_mode == "zoom_out") { 
+		set_mode('zoom_out');
+		user_guide_oldmsg = "";
+		user_guide_msg = "지도를 클릭하면 중심점으로 축소합니다.";
+	}
+//	else {  set_mode('pan');  }		// 이건 임시
+
+	// message 변수 값이 있을때 alert()
+	var msg = get_value( 'message' );
+	if ( msg == null || msg == '')	{
+	
+	} else {
+		alert(msg);
+	}
+	
+	// 선택된 구에 대한 동 표시
+	var gu_index = document.all.skk_id.selectedIndex;	
+	var gu_value = parseInt(document.all.skk_id[gu_index].value);
+	
+	dong_loading(gu_value);	
+	
+	// 유형의 탭 유지
+	var yu_group = document.all.yu_grp.value;
+
+	if (yu_group =="0") { menu1(); }
+	else if (yu_group=="1") { menu2(); }
+	else if (yu_group=="2") { menu3(); }
+	else {  menu1();  }
+			
+	// 메인 페이지의 플래시 맵에서 동 이동 해 온 경우
+	var flashmap_code = get_value('move_emd_id');
+	
+	if (parseInt(flashmap_code) > 0) {
+		dong_change_width_code(flashmap_code);
+	}
+	
+//	alert("x : " + document.all.minx.value + ", y : " + document.all.miny.value);
+//	alert(document.all.minx.value +", " + document.all.miny.value +", " + document.all.maxx.value +", " + document.all.maxy.value);
+}
+
+// 선택된 레벨 하이라이트 이미지
+function active_level_image()
+{
+	var zoomlevel = document.all.level.value;
+	
+	document.all.image1.src="images/zoom09.gif";
+	document.all.image2.src="images/zoom08.gif";
+	document.all.image3.src="images/zoom07.gif";
+	document.all.image4.src="images/zoom06.gif";
+	document.all.image5.src="images/zoom05.gif";
+	document.all.image6.src="images/zoom04.gif";
+	document.all.image7.src="images/zoom03.gif";
+	document.all.image8.src="images/zoom02.gif";
+	document.all.image9.src="images/zoom01.gif";
+	document.all.image10.src="images/zoom00.gif";
+	
+	if (zoomlevel == 1) { document.all.image1.src="images/zoom09_n.gif"; }
+	else if (zoomlevel == 2) { document.all.image2.src="images/zoom08_n.gif"; }
+	else if (zoomlevel == 3) { document.all.image3.src="images/zoom07_n.gif"; }
+	else if (zoomlevel == 4) { document.all.image4.src="images/zoom06_n.gif"; }
+	else if (zoomlevel == 5) { document.all.image5.src="images/zoom05_n.gif"; }
+	else if (zoomlevel == 6) { document.all.image6.src="images/zoom04_n.gif"; }
+	else if (zoomlevel == 7) { document.all.image7.src="images/zoom03_n.gif"; }
+	else if (zoomlevel == 8) { document.all.image8.src="images/zoom02_n.gif"; }
+	else if (zoomlevel == 9) { document.all.image9.src="images/zoom01_n.gif"; }
+	else if (zoomlevel == 10) { document.all.image10.src="images/zoom00_n.gif"; }
+	
+	window.status = "";
+}
+
+// 마우스 커서 관련 함수
+function mouse_cursor_move()
+{
+	toplevel++;
+	document.all.map_layer_pan.style.zIndex= toplevel;
+}
+function mouse_cursor_zoomin()
+{
+	toplevel++;
+	document.all.map_layer_zoomin.style.zIndex= toplevel;
+}
+function mouse_cursor_zoomout()
+{
+	toplevel++;
+	document.all.map_layer_zoomout.style.zIndex= toplevel;
+}
+
+// tooltip 관련 함수
+var n = (document.layers) ? 1:0;
+var ie = (document.all) ? 1:0;
+
+function overTip(boxObj) {
+	if (ie) {
+        	boxObj.style.visibility = "visible";
+        	boxObj.style.pixelLeft=event.clientX+document.body.scrollLeft+10;	// 마우스의 위치에 따라 생성되는 좌표 계산
+        	boxObj.style.pixelTop=event.clientY+document.body.scrollTop+10;
+        	boxObj.filters.item(0).stop();
+	}          
+}
+function outTip(boxObj) {
+	if (ie) {
+		boxObj.style.visibility = "hidden";
+	}
+}
+
+// 마우스 업 이벤트
+function MapMouseUp(a) {
+	if (mdown && event.srcElement.className == "drag")
+	{	
+		mdown = false;
+
+		var dx = event.clientX - mx;
+		var dy = event.clientY - my;
+		
+		if ((dx >= -4 && dx <= 4) && (dy >= -4 && dy <= 4))
+		{
+			return false;
+			process_mouse_click(a);
+		}
+		else
+		{
+		 	var x = (event.srcElement.width / 2) - dx;
+		 	var y = (event.srcElement.height / 2) - dy;
+	  		var para = '' + x + ',' + y;
+	  	//	alert( "" + event.srcElement.width + ", " + event.srcElement.height + ", 이동x: " + dx + ", 이동y: " + dy + ", 다음중심x: " + x + ", 다음 중심y: " + y );
+	  		command( "pan" );
+	  		set_value( "cmd_para", para );
+	  		main_form_submit( "" );
+	  		
+	  		return true;
+	  	}
+	}
+	
+	mdown = false;
+	return false;
+}
+
+// 마우스 다운 이벤트
+function MapMouseDown()
+{
+	if (event.srcElement.className == "drag") {
+		mx = event.clientX;
+		my = event.clientY;
+		mdown= true;	
+	}
+}
+
+// 지도위에 마우스가 움직일때
+function moving(a)
+{
+	var tx= event.offsetX;
+	var ty= event.offsetY;
+
+	// 마우스의 좌표 msg
+	var tmx = parseInt(document.all.maxx.value) - parseInt(document.all.minx.value);
+	var tmy = parseInt(document.all.maxy.value) - parseInt(document.all.miny.value);
+	
+	var tmap_width = parseInt(document.all.map_width.value);
+	var tmap_height = parseInt(document.all.map_height.value);
+	
+	var tdx = (tmx/tmap_width) * tx + parseInt(document.all.minx.value);
+	var tdy = parseInt(document.all.maxy.value) - (tmy/tmap_height) * ty;
+	
+	var str_tdx = "" + tdx;
+	var str_tdy = "" + tdy;
+	var dott1 = str_tdx.indexOf(".");
+	var dott2 = str_tdy .indexOf(".");
+	
+	
+	var pos_string = "x: " + str_tdx.substring(0, dott1+2) + ", y: " + str_tdy.substring(0, dott2+2);
+		
+	mouse_pos_msg = pos_string;
+
+	
+	// poi 툴팁	
+	var poi_mouse_over = is_on_poi_pnt(tx, ty);
+	if (poi_mouse_over)
+	{
+		var poi_value = document.all.poi_name.value;
+		var text = poi_value + "<br><span style='color:#585858'>클릭하면 해당 기사로 이동합니다.</span>";
+		poi_tooltip.innerHTML= text ;
+		overTip(poi_tooltip);			
+	}
+	else
+	{
+		outTip(poi_tooltip);
+	}
+	
+	if( mode == 'pan' || mode == 'edu_call' ) {
+	     realtime_pan();
+	} else {
+//	   alert ( "mode = " + mode );
+	}
+	
+}
+
+function realtime_pan() {
+    var jido = get_obj( 'jido' );
+    
+    var tx= event.offsetX;
+    var ty= event.offsetY;
+    
+    tx = 20; ty = 40;
+    
+    //jido.style = "position:absolute; z-index:7; left: 10px; top: 20px;" ;
+    
+    //jido.style.left = tx + ' px' ;
+    //jido.style.top = ty + ' px' ;
+    
+}
+
+// 지도위에서 마우스가 out 되었을때
+function mouse_msg_clr()
+{
+	mouse_pos_msg = "";
+}
+
+// 버튼위에 마우스 over/out 이벤트
+function to_center_over()
+{
+	overTip(tiptext1);
+	user_guide_oldmsg = user_guide_msg;
+	user_guide_msg = "지도를 클릭하면 중심점으로 이동합니다.";
+}
+function zoom_in_over()
+{
+	overTip(tiptext2);
+	user_guide_oldmsg = user_guide_msg;
+	user_guide_msg = "지도를 클릭하면 중심점으로 확대합니다.";
+}
+function to_center_out()
+{
+	outTip(tiptext1);
+	if (mode != 'pan') {
+		if (user_guide_oldmsg != "") {
+			user_guide_msg = user_guide_oldmsg;
+			user_guide_oldmsg = "";
+		}
+		else {
+			user_guide_msg = "";
+		}
+	}
+}
+function zoom_in_out()
+{
+	outTip(tiptext2);
+	if (mode != 'zoom_in') {
+		if (user_guide_oldmsg != "") {
+			user_guide_msg = user_guide_oldmsg;
+			user_guide_oldmsg = "";
+		}
+		else {
+			user_guide_msg = "";
+		}
+	}
+}
+function zoom_plus_over()
+{
+	overTip(tiptext3);
+	user_guide_oldmsg = user_guide_msg;
+	user_guide_msg = "지도를 한 수준 올립니다.";
+}
+function zoom_minus_over()
+{
+	overTip(tiptext14);
+	user_guide_oldmsg = user_guide_msg;
+	user_guide_msg = "지도를 한 수준 내립니다.";
+}
+function zoom_plus_out()
+{
+	outTip(tiptext3);
+	if (user_guide_oldmsg != "") {
+		user_guide_msg = user_guide_oldmsg;
+		user_guide_oldmsg = "";
+	}
+	else {
+		user_guide_msg = "";
+	}
+}
+function zoom_minus_out()
+{
+	outTip(tiptext14);
+	if (user_guide_oldmsg != "") {
+		user_guide_msg = user_guide_oldmsg;
+		user_guide_oldmsg = "";
+	}
+	else {
+		user_guide_msg = "";
+	}
+}
+function zoom_out_over()
+{
+	overTip(tiptext15);
+	user_guide_oldmsg = user_guide_msg;
+	user_guide_msg = "지도를 클릭하면 중심점으로 축소합니다.";
+}
+function zoom_out_out()
+{
+	outTip(tiptext15);
+	if (mode != "zoom_out")	{
+		if (user_guide_oldmsg != "") {
+			user_guide_msg = user_guide_oldmsg;
+			user_guide_oldmsg = "";
+		}
+		else {
+			user_guide_msg = "";
+		}
+	}
+}
+function general_map_over()
+{
+	overTip(tiptext16);
+	user_guide_oldmsg = user_guide_msg;
+	user_guide_msg = "전체 지도를 보여줍니다.";
+}
+function general_map_out()
+{
+	outTip(tiptext16);
+	if (user_guide_oldmsg != "") {
+		user_guide_msg = user_guide_oldmsg;
+		user_guide_oldmsg = "";
+	}
+	else {
+		user_guide_msg = "";
+	}
+}
+
+// 마우스가 level버튼에서 out되었을때 이벤트
+function zoom1_img_out()
+{
+	if (document.all.level.value != 1)	{document.all.image1.src="images/zoom09.gif";}
+	else	{document.all.image1.src="images/zoom09_n.gif";}
+}
+function zoom2_img_out()
+{
+	if (document.all.level.value != 2)	{document.all.image2.src="images/zoom08.gif";}
+	else	{document.all.image2.src="images/zoom08_n.gif";}
+}
+function zoom3_img_out()
+{
+	if (document.all.level.value != 3)	{document.all.image3.src="images/zoom07.gif";}
+	else	{document.all.image3.src="images/zoom07_n.gif";}
+}
+function zoom4_img_out()
+{
+	if (document.all.level.value != 4)	{document.all.image4.src="images/zoom06.gif";}
+	else	{document.all.image4.src="images/zoom06_n.gif";}
+}
+function zoom5_img_out()
+{
+	if (document.all.level.value != 5)	{document.all.image5.src="images/zoom05.gif";}
+	else	{document.all.image5.src="images/zoom05_n.gif";}
+}
+function zoom6_img_out()
+{
+	if (document.all.level.value != 6)	{document.all.image6.src="images/zoom04.gif";}
+	else	{document.all.image6.src="images/zoom04_n.gif";}
+}
+function zoom7_img_out()
+{
+	if (document.all.level.value != 7)	{document.all.image7.src="images/zoom03.gif";}
+	else	{document.all.image7.src="images/zoom03_n.gif";}
+}
+function zoom8_img_out()
+{
+	if (document.all.level.value != 8)	{document.all.image8.src="images/zoom02.gif";}
+	else	{document.all.image8.src="images/zoom02_n.gif";}
+}
+function zoom9_img_out()
+{
+	if (document.all.level.value != 9)	{document.all.image9.src="images/zoom01.gif";}
+	else	{document.all.image9.src="images/zoom01_n.gif";}
+}
+function zoom10_img_out()
+{
+	if (document.all.level.value != 10)	{document.all.image10.src="images/zoom00.gif";}
+	else	{document.all.image10.src="images/zoom00_n.gif";}
+}
+
+// 구를 선택했을때
+function gu_change()
+{
+	var gu_index = document.all.skk_id.selectedIndex;	
+	var gu_value = parseInt(document.all.skk_id[gu_index].value)
+	
+	if (gu_value == 0)	{
+	//	return;
+	}
+	
+	if (gu_value > 3) { return; }
+	
+	set_value("sel_emd_id", -1);		//  동의 초기값을 -1로 
+	
+	dong_loading(gu_value);	
+
+	
+	command( "pan" );
+	if (gu_value == 1)	{
+		bundanggu_pos()
+	}
+	else if (gu_value == 2) {
+		sujeonggu_pos();
+	}
+	else if (gu_value == 3) {
+		jungwongu_pos();
+	}
+	main_form_submit( "" );	
+}
+
+function dong_loading(gu_value)	// 동 값 넣기
+{
+	var select_dong = document.all.sel_emd_id.value;
+	
+	gu_type = parseInt(gu_value)-1;
+
+	for(i=document.all.emd_id.length-1; i>0; i--) {
+		document.all.emd_id.options[i] = null;
+	}
+
+	j=1;
+
+	for(i=1; i<=DongArray.length; i++) {
+		if(DongArray[i-1].gu == gu_type) {
+			document.all.emd_id.options[j] = new Option(DongArray[i-1].dong, DongArray[i-1].id);
+			if (DongArray[i-1].id == select_dong) {
+				document.all.emd_id.options[j].selected = true; 
+			}
+			j++;
+		}
+	}
+}
+function gu_level_offset()	// 각 레벨별 offset값
+{
+	var zoomlevel = document.all.level.value;
+	var mdset;
+	
+	if (zoomlevel == 1) { mdset= 150; }
+	else if (zoomlevel == 2) { mdset= 225; }
+	else if (zoomlevel == 3) { mdset= 310; }
+	else if (zoomlevel == 4) { mdset= 455; }
+	else if (zoomlevel == 5) { mdset= 675; }
+	else if (zoomlevel == 6) { mdset= 960; }
+	else if (zoomlevel == 7) { mdset= 1355; }
+	else if (zoomlevel == 8) { mdset= 2100; }
+	else if (zoomlevel == 9) { mdset= 3050; }
+	else if (zoomlevel == 10) { mdset= 4500; }
+	
+	return mdset;
+}
+function sujeonggu_pos()	//수정구
+{
+	var gminx, gminy, gmaxx, gmaxy;
+	var midx = 13030.64039408867;
+	var midy = 12333.448275862069;
+
+	var mdset = gu_level_offset();	
+
+	gminx = midx - mdset;
+	gminy = midy - mdset;
+	gmaxx = midx + mdset;
+	gmaxy = midy + mdset;
+		
+	set_value("minx", gminx);
+	set_value("miny", gminy);
+	set_value("maxx", gmaxx);
+	set_value("maxy", gmaxy);
+}
+
+function bundanggu_pos()	//분당구
+{
+	var gminx, gminy, gmaxx, gmaxy;
+	var midx = 10628.10344827586;
+	var midy = 5014.162861576355;
+
+	var mdset = gu_level_offset();	
+
+	gminx = midx - mdset;
+	gminy = midy - mdset;
+	gmaxx = midx + mdset;
+	gmaxy = midy + mdset;
+		
+	set_value("minx", gminx);
+	set_value("miny", gminy);
+	set_value("maxx", gmaxx);
+	set_value("maxy", gmaxy);
+}
+function jungwongu_pos()	//중원구
+{
+	var gminx, gminy, gmaxx, gmaxy;
+	var midx = 12248.84236453202;
+	var midy = 10191.625615763547;
+
+	var mdset = gu_level_offset();	
+
+	gminx = midx - mdset;
+	gminy = midy - mdset;
+	gmaxx = midx + mdset;
+	gmaxy = midy + mdset;
+		
+	set_value("minx", gminx);
+	set_value("miny", gminy);
+	set_value("maxx", gmaxx);
+	set_value("maxy", gmaxy);	
+}
+
+// 동을 선택했을 때
+function dong_change()
+{
+	var dong_index = document.all.emd_id.selectedIndex;
+	var dong_value = document.all.emd_id[dong_index].value;
+	
+	set_value("sel_emd_id", dong_value);
+	
+	dong_move(parseInt(dong_value));
+}
+// 동의 code 값으로 이동할때(메인 플래시 맵에서 이동)
+function dong_change_width_code(dong_code)
+{
+	set_value("sel_emd_id", dong_code);
+	set_value("move_emd_id", 0);	
+	dong_move(parsInt(dong_code));	
+}
+// 동으로 이동
+function dong_move(dong_value)
+{	
+	var gminx, gminy, gmaxx, gmaxy;
+	var midx = 0;
+	var midy = 0;
+	
+	if (dong_value == 41131101) {	//신흥동
+		midx = 12630;	midy = 11552;
+	}
+	else if (dong_value == 41131102)  {	//태평동
+		midx = 11328+150;	midy = 11035+150;
+	}
+	else if (dong_value == 41131103)  {	//수진동
+		midx = 12391;	midy = 11055;
+	}
+	else if (dong_value == 41131104)  {	//단대동
+		midx = 13859;	midy = 12236;
+	}
+	else if (dong_value == 41131105)  {	//산성동
+		midx = 13380;	midy = 12529;
+	}
+	else if (dong_value == 41131106)  {	//양지동
+		midx = 14366;	midy = 12864;
+	}
+	else if (dong_value == 41131107)  {	//복정동
+//		midx = 11215;	midy = 13831;
+		midx = 11369;	midy = 13996;
+	}
+	else if (dong_value == 41131108) {	//창곡동
+		midx = 12338;	midy = 14358;
+	}
+	else if (dong_value == 41131109)  {	//신촌동
+		midx = 9330;	midy = 12803;
+	}
+	else if (dong_value == 41131110) {	//오야동
+		midx = 9923;	midy = 12869;
+	}
+	else if (dong_value == 41131111)  {	//심곡동
+		midx = 9027;	midy = 12061;
+	}
+	else if (dong_value == 41131112)  {	//고등동
+		midx = 8986+150;	midy = 9310+150;
+	}
+	else if (dong_value == 41131113) {	//상적동
+		midx = 7017;	midy = 9812;
+	}
+	else if (dong_value == 41131114)  {	//둔전동
+		midx = 9755;	midy = 10866;
+	}
+	else if (dong_value == 41131115)  {	//시흥동
+//		midx = 9119;	midy = 9072;
+		midx = 9935;	midy = 9085;
+	}
+	else if (dong_value == 41131116) {	//금토동
+		midx = 8888;	midy = 8422;
+	}
+	else if (dong_value == 41131117)  {	//사송동
+		midx = 10371;	midy = 7603;
+	}
+	else if (dong_value == 41133101)  {	//성남동
+		midx = 10770;		midy = 10193;
+	}
+	else if (dong_value == 41133102)  {	//중동
+		midx = 13993;		midy = 11641;
+	}
+	else if (dong_value == 41133103)  {	//금광동
+		midx = 14495;		midy = 11772;
+	}
+	else if (dong_value == 41133104)  {	//은행동
+		midx = 14677+150;		midy = 12549+150;
+	}
+	else if (dong_value == 41133105)  {	//상대원동
+		midx = 13896+150;		midy = 10655+150;
+	}
+	else if (dong_value == 41133106)  {	//여수동
+		midx = 12085;	midy = 8917;
+	}
+	else if (dong_value == 41133107)  {	//도촌동
+		midx = 15487;	midy = 8258;
+	}
+	else if (dong_value == 41133108)  {	//갈현동
+		midx = 15170;	midy = 8890;
+	}
+	else if (dong_value == 41133109)	{	//하대원동
+		midx = 12872+150;		midy = 9727+150;
+	}
+	else if (dong_value == 41135101)  {	//분당동
+		midx = 11540+150;		midy = 3506+150;
+	}
+	else if (dong_value == 41135102)  {	//수내동
+		midx = 10422+150;		midy = 4087+150;
+	}
+	else if (dong_value == 41135103)  {	//정자동
+		midx = 9797+150;		midy = 2594+150;
+	}
+	else if (dong_value == 41135104)  {	//율동
+		midx = 13634;	midy = 5606;
+	}
+	else if (dong_value == 41135105)  {	//서현동
+		midx = 11100+150;		midy = 4847+150;
+	}
+	else if (dong_value == 41135106)  {	//이매동
+		midx = 11244+150;		midy = 6685+150;
+	}
+	else if (dong_value == 41135107)  {	//야탑동
+		midx = 11487+150;		midy = 8036+150;
+	}
+	else if (dong_value == 41135108)  {	//판교동
+		midx = 8825+150;		midy = 5514+150;
+	}
+	else if (dong_value == 41135109)  {	//삼평동
+		midx = 9447;	midy = 7446;
+	}
+	else if (dong_value == 41135110)  {	//백현동
+		midx = 8048;	midy = 4386;
+	}
+	else if (dong_value == 41135111)  {	//금곡동
+		midx = 9411+150;		midy = 1497+150;
+	}
+	else if (dong_value == 41135112)  {	//궁내동
+		midx = 8305;	midy = 3915;
+	}
+	else if (dong_value == 41135113)  {	//동원동
+		midx = 7660;	midy = 2099;
+	}
+	else if (dong_value == 41135114)  {	//구미동
+		midx = 10683+150;		midy = 210+150;
+	}
+	else if (dong_value == 41135115)  {	//운중동
+		midx = 6871+150;		midy = 5851+150;
+	}
+	else if (dong_value == 41135116)  {	//대장동
+		midx = 5559;	midy = 3754;
+	}
+	else if (dong_value == 41135117)  {	//석운동
+		midx = 3680;	midy = 5186;
+	}
+	else if (dong_value == 41135118)  {	//하산운동
+		midx = 7107;	midy = 5581;
+	}
+	
+	var mdset = gu_level_offset();	
+
+	gminx = midx - mdset;
+	gminy = midy - mdset;
+	gmaxx = midx + mdset;
+	gmaxy = midy + mdset;
+
+	command( "pan" );
+			
+	set_value("minx", gminx);
+	set_value("miny", gminy);
+	set_value("maxx", gmaxx);
+	set_value("maxy", gmaxy);
+
+	main_form_submit( "" );	
+}
+
+// status에 보여주는 안내 메세지
+function show_msg()
+{
+	if (mouse_pos_msg != "")
+		window.status = user_guide_msg + " ( " + mouse_pos_msg + " )";
+	else
+		window.status = user_guide_msg;
+}
+
+// 메뉴를 클릭하면 해당 유형을 보여주는 layer를 toplevel로 띄운다.
+function menu1()
+{
+	m_toplevel++;
+	document.all.m1.style.zIndex= m_toplevel;
+	menu_img_change(1);
+	menu_grp_change(1);
+	
+	order_check_undo(1);
+}
+function menu2()
+{
+	m_toplevel++;
+	document.all.m2.style.zIndex= m_toplevel;
+	menu_img_change(2);
+	menu_grp_change(2);
+	
+	order_check_undo(2);
+}
+function menu3()
+{
+	m_toplevel++;
+	document.all.m3.style.zIndex= m_toplevel;
+	menu_img_change(3);
+	menu_grp_change(3);
+	
+	order_check_undo(3);
+}
+
+// 유형 메뉴의 이미지 체인지
+function menu_img_change(layer_index)
+{
+	document.all.m1_img.src="images/m2_d.gif";
+	document.all.m2_img.src="images/m3_d.gif";
+	document.all.m3_img.src="images/m4_d.gif";
+	
+	if (layer_index == 1) { document.all.m1_img.src="images/m2_n.gif"; }
+	else if (layer_index== 2) { document.all.m2_img.src="images/m3_n.gif"; }
+	else if (layer_index== 3) { document.all.m3_img.src="images/m4_n.gif"; }
+
+}
+// 유형의 그룹 value 체인지
+function menu_grp_change(layer_index)
+{
+	if (layer_index == 1) {set_value("yu_grp", 0); }
+	else if (layer_index== 2) {set_value("yu_grp", 1);}
+	else if (layer_index== 3) {set_value("yu_grp", 2);}
+}
+
+// 유형의 베타적 선택
+function order_check_undo(layer_index)
+{
+	if (layer_index != 1)
+	{
+		m1_select_change(false);
+	}
+	if (layer_index != 2)
+	{
+		m2_select_change(false);
+	}
+	if (layer_index != 3)
+	{
+		m3_select_change(false);
+	}
+}
+
+// 모두 선택 모두 해제
+function yu_select_change(check)
+{
+	var yg = parseInt(get_value('yu_grp'));
+	
+	if (yg == 0) {m1_select_change(check);}
+	else if (yg==1) {m2_select_change(check);}
+	else if (yg==2) {m3_select_change(check);}
+	else {m1_select_change(check);}
+}
+
+// 유형의 모두 선택 눌렀을 때
+function m1_select_change(check)
+{
+	var all = check;
+	
+	document.all.yu_21.checked = all;
+	document.all.yu_22.checked = all;
+	document.all.yu_23.checked = all;
+	document.all.yu_25.checked = all;
+	document.all.yu_26.checked = all;
+	document.all.yu_27.checked = all;
+	document.all.yu_28.checked = all;
+	document.all.yu_29.checked = all;
+}
+function m2_select_change(check)
+{
+	var all = check;
+	
+	document.all.yu_34.checked = all;
+	document.all.yu_35.checked = all;
+	document.all.yu_36.checked = all;
+	document.all.yu_37.checked = all;
+	document.all.yu_38.checked = all;
+	document.all.yu_40.checked = all;
+	document.all.yu_41.checked = all;
+	document.all.yu_42.checked = all;
+	document.all.yu_43.checked = all;
+	document.all.yu_44.checked = all;
+	document.all.yu_46.checked = all;
+}
+function m3_select_change(check)
+{
+	var all = check;
+	
+	document.all.yu_17.checked = all;
+	document.all.yu_18.checked = all;
+	document.all.yu_19.checked = all;
+}
+
+// poi 검색 결과 출력 리스트의 poi이름을 클릭 했을 때
+function show_poi_map(poi_value)
+{
+	set_value('poi_name', poi_value);
+	command( "search" );
+	main_form_submit( '' );
+}
+
+window.onload=init_setting;
+document.onmousemove=show_msg;
+   
+</script>
+		<style type="text/css">
+<!--
+.tipElm {
+	cursor: help;
+	text-decoration: underline;
+	font-size: 10pt;
+	font-family: 돋움;
+	color: #34896E;
+}
+
+.box {
+	font-size: 9pt;
+	font-family: 돋움;
+	color: #0041A2;
+	border: 1px solid black;
+	background: #FDFCE0;
+	padding: 5;
+}
+
+.poi_tooltip_box {
+	font-size: 9pt;
+	font-family: 돋움;
+	color: #0041A2;
+	border: 1px solid black;
+	border-top: solid #B6B6B6 1px;
+	border-bottom: solid #B6B6B6 1px;
+	border-left: solid #B6B6B6 1px;
+	border-right: solid #B6B6B6 1px;
+	background: #F7F7F7;
+	padding: 5;
+}
+
+.style7 {
+	font-size: 10pt;
+	color: #ED6C1F;
+}
+
+.style8 {
+	font-size: 10pt
+}
+
+.style9 {
+	font-size: 9pt
+}
+
+.map_style {
+	background-repeat: no-repeat;
+	background-position: center;
+	cursor: url(images/Hand.cur);
+	border-top: solid #B7B19F 1px;
+	border-bottom: solid #B7B19F 1px;
+	border-left: solid #B7B19F 1px;
+	border-right: solid #B7B19F 1px;
+}
+
+.map_border {
+	border-top: solid #B7B19F 1px;
+	border-bottom: solid #B7B19F 1px;
+	border-left: solid #B7B19F 1px;
+	border-right: solid #B7B19F 1px;
+}
+
+.level_style {
+	font-size: 10pt;
+	cursor: hand;
+}
+
+.pan_dir_style {
+	font-size: 10pt;
+	cursor: hand;
+}
+
+.yu_menu_style {
+	border-bottom: solid #B7B19F 1px;
+	border-left: solid #B7B19F 1px;
+	border-right: solid #B7B19F 1px;
+	background: #FFFFFF;
+}
+
+.style12_serch {
+	font-size: 12px;
+	font-family: 돋움;
+	color: #666666;
+}
+
+.style12_serch_result {
+	border-top: dotted #808080 1px;
+	border-bottom: dotted #808080 1px;
+	padding: 2 3 0;
+}
+
+A.t_gray:link {
+	FONT-SIZE: 9pt;
+	COLOR: #585858;
+	FONT-FAMILY: 돋움;
+	TEXT-DECORATION: none
+}
+
+A.t_gray:visited {
+	FONT-SIZE: 9pt;
+	COLOR: #585858;
+	FONT-FAMILY: 돋움;
+	TEXT-DECORATION: none
+}
+
+A.t_gray:hover {
+	FONT-SIZE: 9pt;
+	COLOR: #005feb;
+	FONT-FAMILY: 돋움;
+	TEXT-DECORATION: underline
+}
+-->
+</style>
+
+	</head>
+
+	<body>
+		<table width="564" border="0" cellpadding="0" cellspacing="0"
+			bgcolor="#FFFFFF">
+			<tr>
+				<td>
+					<table width="564" align="center" border="0" cellpadding="0"
+						cellspacing="0">
+						<tr>
+							<td width="7" bgcolor="#ffffff">
+							</td>
+							<td id="map" width="$map_width" height="$map_height"
+								class="map_style" onMouseDown="MapMouseDown()" bgcolor="cfcff1"
+								background="img/wait.gif">
+								<!-- pan에 대한 layer -->
+								<div id="map_layer_pan" width="$map_width" height="$map_height"
+									style="position: absolute; z-index: 10;">
+									<table width="$map_width" height="$map_height" cellpadding="0"
+										cellspacing="0">
+										<tr>
+											<td width="$map_width" height="$map_height" class="drag"
+												style="cursor: url(images/Hand.cur)"
+												onClick="process_mouse_click(this);"
+												onMouseDown="MapMouseDown()" onMouseMove="moving(this)"
+												onMouseOut="mouse_msg_clr()"></td>
+										</tr>
+									</table>
+								</div>
+								<!-- Zoom In 에 대한 layer -->
+								<div id="map_layer_zoomin" width="$map_width"
+									height="$map_height" style="position: absolute; z-index: 9;">
+									<table width="$map_width" height="$map_height" cellpadding="0"
+										cellspacing="0">
+										<tr>
+											<td width="$map_width" height="$map_height" class="drag"
+												style="cursor: url(images/ZoomIn.cur)"
+												onClick="process_mouse_click(this);"
+												onMouseDown="MapMouseDown()" onMouseMove="moving(this)"
+												onMouseOut="mouse_msg_clr()"></td>
+										</tr>
+									</table>
+								</div>
+								<!-- Zoom Out에 대한 layer -->
+								<div id="map_layer_zoomout" width="$map_width"
+									height="$map_height" style="position: absolute; z-index: 8;">
+									<table width="$map_width" height="$map_height" cellpadding="0"
+										cellspacing="0">
+										<tr>
+											<td width="$map_width" height="$map_height" class="drag"
+												style="cursor: url(images/ZoomOut.cur)"
+												onClick="process_mouse_click(this);"
+												onMouseDown="MapMouseDown()" onMouseMove="moving(this)"
+												onMouseOut="mouse_msg_clr()"></td>
+										</tr>
+									</table>
+								</div>
+
+								<!-- <div name = "jido" style="position:absolute; z-index:7; left: 0px; top: 0px;" > -->
+
+								<img name="jido" src="$img_map.gif" width="$map_width"
+									height="$map_height" GALLERYIMG="no">
+
+								<!-- </div> -->
+
+							</td>
+							<td width="7" bgcolor="#ffffff">
+							</td>
+						</tr>
+					</table>
+				</td>
+				<div id="poi_tooltip" class="poi_tooltip_box"
+					style="position: absolute; z-index: 200; filter: revealTrans(duration = 1); visibility: hidden; color: #0F4CD2; font-family: 돋움;">
+				</div>
+			</tr>
+			<tr>
+				<td height="4" width="100%">
+				</td>
+			</tr>
+			<tr>
+				<td align="center" valign="bottom">
+					<table width="404" border="0" cellpadding="0" cellspacing="0"
+						id="zoom">
+						<tr>
+							<td width="42">
+								<span class"tipElm" onMouseOver="to_center_over()"
+									onMouseOut="to_center_out()"> <img
+										src="images/zoommovebtn.gif" width="37" height="37" border="0"
+										onClick="set_mode( 'pan' );">
+									<div id="tiptext1" class="box"
+										style="position: absolute; z-index: 200; width: 60; filter: revealTrans(duration = 1); visibility: hidden; color: #000000; font-family: 돋움;">
+										중심이동
+									</div> </span>
+							</td>
+							<td width="42">
+								<span class"tipElm" onMouseOver="zoom_in_over()"
+									onMouseOut="zoom_in_out()"> <img
+										src="images/zoomlargebtn.gif" width="37" height="37"
+										border="0" onMouseUp="set_mode( 'zoom_in' );">
+									<div id="tiptext2" class="box"
+										style="position: absolute; z-index: 200; width: 36; filter: revealTrans(duration = 1); visibility: hidden; color: #000000; font-family: 돋움;">
+										확대
+									</div> </span>
+							</td>
+							<td align="center" width="233">
+								<table width="212" border="0" cellpadding="0" cellspacing="0"
+									id="zoomcen">
+									<tr>
+										<td width="14">
+											<span class"tipElm" onMouseOver="zoom_plus_over()"
+												onMouseOut="zoom_plus_out()"> <img
+													src="images/zoomleft.gif" width="14" height="37" border="0"
+													onClick="zoom_left();">
+												<div id="tiptext3" class="box"
+													style="position: absolute; z-index: 200; width: 88; filter: revealTrans(duration = 1); visibility: hidden; color: #000000; font-family: 돋움;">
+													한수준 올리기
+												</div>
+											</span>
+										</td>
+										<td align="center" valign="middle"
+											background="images/zoomcen.gif">
+											<table width="181" border="0" cellpadding="3" cellspacing="0"
+												id="zoomstep">
+												<tr>
+													<td width="26">
+														<span class"tipElm" onMouseOver="overTip(tiptext4)"
+															onMouseOut="outTip(tiptext4)"> <img
+																src="images/zoom09.gif" width="26" height="19"
+																border="0" onClick="set_level(1)" name="image1"
+																OnMouseOut="zoom1_img_out()"
+																OnMouseOver="image1.src='images/zoom09_o.gif';">
+															<div id="tiptext4" class="box"
+																style="position: absolute; z-index: 200; width: 20; filter: revealTrans(duration = 1); visibility: hidden; color: #000000;">
+																1
+															</div>
+														</span>
+													</td>
+													<td width="21">
+														<span class"tipElm" onMouseOver="overTip(tiptext5)"
+															onMouseOut="outTip(tiptext5)"> <img
+																src="images/zoom08.gif" width="21" height="19"
+																border="0" onClick="set_level(2)" name="image2"
+																OnMouseOut="zoom2_img_out()"
+																OnMouseOver="image2.src='images/zoom08_o.gif';">
+															<div id="tiptext5" class="box"
+																style="position: absolute; z-index: 200; width: 20; filter: revealTrans(duration = 1); visibility: hidden; color: #000000;">
+																2
+															</div>
+														</span>
+													</td>
+													<td width="17">
+														<span class"tipElm" onMouseOver="overTip(tiptext6)"
+															onMouseOut="outTip(tiptext6)"> <img
+																src="images/zoom07.gif" width="17" height="19"
+																border="0" onClick="set_level(3)" name="image3"
+																OnMouseOut="zoom3_img_out()"
+																OnMouseOver="image3.src='images/zoom07_o.gif';">
+															<div id="tiptext6" class="box"
+																style="position: absolute; z-index: 200; width: 20; filter: revealTrans(duration = 1); visibility: hidden; color: #000000;">
+																3
+															</div>
+														</span>
+													</td>
+													<td width="14">
+														<span class"tipElm" onMouseOver="overTip(tiptext7)"
+															onMouseOut="outTip(tiptext7)"> <img
+																src="images/zoom06.gif" width="14" height="19"
+																border="0" onClick="set_level(4)" name="image4"
+																OnMouseOut="zoom4_img_out()"
+																OnMouseOver="image4.src='images/zoom06_o.gif';">
+															<div id="tiptext7" class="box"
+																style="position: absolute; z-index: 200; width: 20; filter: revealTrans(duration = 1); visibility: hidden; color: #000000;">
+																4
+															</div>
+														</span>
+													</td>
+													<td width="12">
+														<span class"tipElm" onMouseOver="overTip(tiptext8)"
+															onMouseOut="outTip(tiptext8)"> <img
+																src="images/zoom05.gif" width="12" height="19"
+																border="0" onClick="set_level(5)" name="image5"
+																OnMouseOut="zoom5_img_out()"
+																OnMouseOver="image5.src='images/zoom05_o.gif';">
+															<div id="tiptext8" class="box"
+																style="position: absolute; z-index: 200; width: 20; filter: revealTrans(duration = 1); visibility: hidden; color: #000000;">
+																5
+															</div>
+														</span>
+													</td>
+													<td width="10">
+														<span class"tipElm" onMouseOver="overTip(tiptext9)"
+															onMouseOut="outTip(tiptext9)"> <img
+																src="images/zoom04.gif" width="10" height="19"
+																border="0" onClick="set_level(6)" name="image6"
+																OnMouseOut="zoom6_img_out()"
+																OnMouseOver="image6.src='images/zoom04_o.gif';">
+															<div id="tiptext9" class="box"
+																style="position: absolute; z-index: 200; width: 20; filter: revealTrans(duration = 1); visibility: hidden; color: #000000;">
+																6
+															</div>
+														</span>
+													</td>
+													<td width="8">
+														<span class"tipElm" onMouseOver="overTip(tiptext10)"
+															onMouseOut="outTip(tiptext10)"> <img
+																src="images/zoom03.gif" width="8" height="19" border="0"
+																onClick="set_level(7)" name="image7"
+																OnMouseOut="zoom7_img_out()"
+																OnMouseOver="image7.src='images/zoom03_o.gif';">
+															<div id="tiptext10" class="box"
+																style="position: absolute; z-index: 200; width: 20; filter: revealTrans(duration = 1); visibility: hidden; color: #000000;">
+																7
+															</div>
+														</span>
+													</td>
+													<td width="6">
+														<span class"tipElm" onMouseOver="overTip(tiptext11)"
+															onMouseOut="outTip(tiptext11)"> <img
+																src="images/zoom02.gif" width="6" height="19" border="0"
+																onClick="set_level(8)" name="image8"
+																OnMouseOut="zoom8_img_out()"
+																OnMouseOver="image8.src='images/zoom02_o.gif';">
+															<div id="tiptext11" class="box"
+																style="position: absolute; z-index: 200; width: 20; filter: revealTrans(duration = 1); visibility: hidden; color: #000000;">
+																8
+															</div>
+														</span>
+													</td>
+													<td width="4">
+														<span class"tipElm" onMouseOver="overTip(tiptext12)"
+															onMouseOut="outTip(tiptext12)"> <img
+																src="images/zoom01.gif" width="4" height="19" border="0"
+																onClick="set_level(9)" name="image9"
+																OnMouseOut="zoom9_img_out()"
+																OnMouseOver="image9.src='images/zoom01_o.gif';">
+															<div id="tiptext12" class="box"
+																style="position: absolute; z-index: 200; width: 20; filter: revealTrans(duration = 1); visibility: hidden; color: #000000;">
+																9
+															</div>
+														</span>
+													</td>
+													<td width="3">
+														<span class"tipElm" onMouseOver="overTip(tiptext13)"
+															onMouseOut="outTip(tiptext13)"> <img
+																src="images/zoom00.gif" width="3" height="19" border="0"
+																onClick="set_level(10)" name="image10"
+																OnMouseOut="zoom10_img_out()"
+																OnMouseOver="image10.src='images/zoom00_o.gif';">
+															<div id="tiptext13" class="box"
+																style="position: absolute; z-index: 200; width: 20; filter: revealTrans(duration = 1); visibility: hidden; color: #000000;">
+																10
+															</div>
+														</span>
+													</td>
+												</tr>
+											</table>
+										</td>
+										<td width="14">
+											<span class"tipElm" onMouseOver="zoom_minus_over()"
+												onMouseOut="zoom_minus_out()"> <img
+													src="images/zoomright.gif" width="14" height="37"
+													border="0" onClick="zoom_right();">
+												<div id="tiptext14" class="box"
+													style="position: absolute; z-index: 20; width: 88; filter: revealTrans(duration = 1); visibility: hidden; color: #000000; font-family: 돋움;">
+													한수준 내리기
+												</div>
+											</span>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td width="42">
+								<span class"tipElm" onMouseOver="zoom_out_over()"
+									onMouseOut="zoom_out_out()"> <img
+										src="images/zoomsmallbtn.gif" width="37" height="37"
+										border="0" onMouseUp="set_mode( 'zoom_out' );">
+									<div id="tiptext15" class="box"
+										style="position: absolute; z-index: 20; width: 36; filter: revealTrans(duration = 1); visibility: hidden; color: #000000; font-family: 돋움;">
+										축소
+									</div>
+								</span>
+							</td>
+							<td width="42">
+								<span class"tipElm" onMouseOver="general_map_over()"
+									onMouseOut="general_map_out(tiptext16)"> <img
+										src="images/zoomwinbtn.gif" width="37" height="37" border="0"
+										onClick="view_all()">
+									<div id="tiptext16" class="box"
+										style="position: absolute; z-index: 20; width: 60; filter: revealTrans(duration = 1); visibility: hidden; color: #000000; font-family: 돋움;">
+										전체보기
+									</div>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<table width="564" border="0" cellpadding="0" cellspacing="0"
+						bgcolor="#FFFFFF">
+						<tr>
+							<td align="center">
+								<table width="564" border="0" cellspacing="0" cellpadding="0">
+									<tr>
+										<td>
+											<!--	<table width="564" height="30" border="0" cellpadding="0" cellspacing="0" background="images/m_title.gif">-->
+											<table width="564" height="24" border="0" cellpadding="0"
+												cellspacing="0" bgcolor="#8FA236">
+												<tr>
+													<td>
+														<table border="0" cellspacing="0" width="100%"
+															cellpadding="0" height="100%">
+															<tr>
+																<td width="100%" height="3"></td>
+															</tr>
+															<tr>
+																<td width="100%" height="21">
+																	<table border="0" cellspacing="0" width="100%"
+																		cellpadding="0">
+																		<tr>
+																			<td width="5">
+																				<input name="yu_grp" type="hidden" value="$yu_grp">
+																			</td>
+																			<td id="yu_20" width="101" onClick="menu1()"
+																				style="cursor: hand">
+																				<img id="m1_img" border="0" src="images/m2_d.gif"
+																					width="100" height="21">
+																			</td>
+																			<td id="yu_33" width="101" onClick="menu2()"
+																				style="cursor: hand">
+																				<img id="m2_img" border="0" src="images/m3_d.gif"
+																					width="100" height="21">
+																			</td>
+																			<td width="101" onClick="menu3()"
+																				style="cursor: hand">
+																				<img id="m3_img" border="0" src="images/m4_d.gif"
+																					width="100" height="21">
+																			</td>
+																			<td width="256" align="right">
+																				<img border="0" src="images/b_AllOrNot.gif"
+																					width="137" height="11" usemap="#Map1">
+																				<BR>
+																				<map name="Map1">
+																					<area shape="rect" coords="11,1,57,11" href="#"
+																						onClick="yu_select_change(true);"
+																						onFocus="this.blur()">
+																					<area shape="rect" coords="81,1,128,11" href="#"
+																						onClick="yu_select_change(false);"
+																						onFocus="this.blur()">
+																				</map>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td bgcolor="#FFFFFF">
+											<table width="564" height="80" border="0" cellpadding="0"
+												cellspacing="0" id="level2" class="yu_menu_style">
+												<tr>
+													<td align="left" valign="top">
+														<table width="562" height="100%" border="0"
+															cellpadding="0" cellspacing="0" bgcolor="#FFFFFFF">
+															<tr>
+																<td valign="top" height="80" bgcolor="#FFFFFFF">
+																	<div id="m1" width="550" height="80"
+																		style="position: absolute; z-index: 8;">
+																		<table width="100%" height="100%" border="0"
+																			cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+																			<tr>
+																				<td width="12">
+																				</td>
+																				<td>
+																					<table width="100%" height="100%" border="0"
+																						cellspacing="0" cellpadding="0">
+																						<tr>
+																							<td height="6"></td>
+																						</tr>
+																						<tr>
+																							<td>
+																								<table width="100%" height="100%" border="0"
+																									cellspacing="0" cellpadding="0">
+																									<tr>
+																										<td width="100%" height="64" valign="top">
+																											<table width="100%" border="0"
+																												cellspacing="0" cellpadding="1"
+																												bgcolor="#FFFFFF" class="style12_serch">
+																												<tr>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_21"
+																															value="21" $yu_21_checked>
+																														건축물
+																													</td>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_22"
+																															value="22" $yu_22_checked>
+																														기념물
+																													</td>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_25"
+																															value="25" $yu_25_checked>
+																														묘역
+																													</td>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_26"
+																															value="26" $yu_26_checked>
+																														비
+																													</td>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_27"
+																															value="27" $yu_27_checked>
+																														유물산포지
+																													</td>
+																												</tr>
+																												<tr>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_28"
+																															value="28" $yu_28_checked>
+																														유적지
+																													</td>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_29"
+																															value="29" $yu_29_checked>
+																														지석묘
+																													</td>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_23"
+																															value="23" $yu_23_checked>
+																														기타유적
+																													</td>
+																													<td width="20%">
+																													</td>
+																													<td width="20%">
+																													</td>
+																												</tr>
+																												<tr>
+																													<td width="20%">
+																													</td>
+																													<td width="20%">
+																													</td>
+																													<td width="20%">
+																													</td>
+																													<td width="20%">
+																													</td>
+																													<td width="20%">
+																													</td>
+																												</tr>
+																											</table>
+																										</td>
+																									</tr>
+																								</table>
+																							</td>
+																						</tr>
+																						<tr>
+																							<td height="6"></td>
+																						</tr>
+																					</table>
+																				</td>
+																				<td width="12">
+																				</td>
+																			</tr>
+																		</table>
+																	</div>
+																	<div id="m2" width="550" height="80"
+																		style="position: absolute; z-index: 7;">
+																		<table width="100%" height="100%" border="0"
+																			cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+																			<tr>
+																				<td width="12">
+																				</td>
+																				<td>
+																					<table width="100%" height="100%" border="0"
+																						cellspacing="0" cellpadding="0">
+																						<tr>
+																							<td height="6"></td>
+																						</tr>
+																						<tr>
+																							<td>
+																								<table width="100%" height="100%" border="0"
+																									cellspacing="0" cellpadding="0">
+																									<tr>
+																										<td width="100%" height="64" valign="top">
+																											<table width="100%" border="0"
+																												cellspacing="0" cellpadding="1"
+																												bgcolor="#FFFFFF" class="style12_serch">
+																												<tr>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_35"
+																															value="35" $yu_35_checked>
+																														고지명
+																													</td>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_40"
+																															value="40" $yu_40_checked>
+																														마을
+																													</td>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_34"
+																															value="34" $yu_34_checked>
+																														고개
+																													</td>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_41"
+																															value="41" $yu_41_checked>
+																														산
+																													</td>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_36"
+																															value="36" $yu_36_checked>
+																														공원
+																													</td>
+																												</tr>
+																												<tr>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_38"
+																															value="38" $yu_38_checked>
+																														다리
+																													</td>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_42"
+																															value="42" $yu_42_checked>
+																														세거지
+																													</td>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_43"
+																															value="43" $yu_43_checked>
+																														시장
+																													</td>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_44"
+																															value="44" $yu_44_checked>
+																														역
+																													</td>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_46"
+																															value="46" $yu_46_checked>
+																														하천
+																													</td>
+																												</tr>
+																												<tr>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_37"
+																															value="37" $yu_37_checked>
+																														기타지명
+																													</td>
+																													<td width="20%">
+																													</td>
+																													<td width="20%">
+																													</td>
+																													<td width="20%">
+																													</td>
+																													<td width="20%">
+																													</td>
+																												</tr>
+																											</table>
+																										</td>
+																									</tr>
+																								</table>
+																							</td>
+																						</tr>
+																						<tr>
+																							<td height="6"></td>
+																						</tr>
+																					</table>
+																				</td>
+																				<td width="12">
+																				</td>
+																			</tr>
+																		</table>
+																	</div>
+																	<div id="m3" width="550" height="80"
+																		style="position: absolute; z-index: 6;">
+																		<table width="100%" height="100%" border="0"
+																			cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+																			<tr>
+																				<td width="12">
+																				</td>
+																				<td>
+																					<table width="100%" height="100%" border="0"
+																						cellspacing="0" cellpadding="0">
+																						<tr>
+																							<td height="6"></td>
+																						</tr>
+																						<tr>
+																							<td>
+																								<table width="100%" height="100%" border="0"
+																									cellspacing="0" cellpadding="0">
+																									<tr>
+																										<td width="100%" height="64" valign="top">
+																											<table width="100%" border="0"
+																												cellspacing="0" cellpadding="1"
+																												bgcolor="#FFFFFF" class="style12_serch">
+																												<tr>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_17"
+																															value="17" $yu_17_checked>
+																														사건
+																													</td>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_18"
+																															value="18" $yu_18_checked>
+																														식물
+																													</td>
+																													<td width="20%">
+																														<input type="checkbox" name="yu_19"
+																															value="19" $yu_19_checked>
+																														유물
+																													</td>
+																													<td width="20%">
+																													</td>
+																													<td width="20%">
+																													</td>
+																												</tr>
+																												<tr>
+																													<td width="20%">
+																													</td>
+																													<td width="20%">
+																													</td>
+																													<td width="20%">
+																													</td>
+																													<td width="20%">
+																													</td>
+																													<td width="20%">
+																													</td>
+																												</tr>
+																												<tr>
+																													<td width="20%">
+																													</td>
+																													<td width="20%">
+																													</td>
+																													<td width="20%">
+																													</td>
+																													<td width="20%">
+																													</td>
+																													<td width="20%">
+																													</td>
+																												</tr>
+																											</table>
+																										</td>
+																									</tr>
+																								</table>
+																							</td>
+																						</tr>
+																						<tr>
+																							<td height="6"></td>
+																						</tr>
+																					</table>
+																				</td>
+																				<td width="12">
+																				</td>
+																			</tr>
+																		</table>
+																	</div>
+
+																</td>
+															</tr>
+
+
+														</table>
+													</td>
+												</tr>
+												<!-- 추가 부분 -->
+												<tr>
+													<td align="left" valign="top" bgcolor="#FFFFFF">
+														<table width="556" height="100%" border="0"
+															cellpadding="3" cellspacing="0">
+															<tr>
+																<td>
+																	<table width="550" border="0" cellspacing="0"
+																		cellpadding="2">
+																		<tr>
+																			<td align="center">
+																				<table width="534" border="0" cellspacing="1"
+																					cellpadding="3" class="style12_serch">
+																					<tr bgcolor="#FFFFFF">
+																						<td width="5%" align="center" valign="middle">
+																							<img border="0" src="images/menu01.gif" width="4"
+																								height="7">
+																						</td>
+																						<td width="50%" align="left" valign="middle">
+																							<select name="skk_id" onChange="gu_change()">
+																								<option VALUE="0" $skk_id_0>
+																									성남시
+																								</option>
+																								<option VALUE="1" $skk_id_1>
+																									분당구
+																								</option>
+																								<option VALUE="2" $skk_id_2>
+																									수정구
+																								</option>
+																								<option VALUE="3" $skk_id_3>
+																									중원구
+																								</option>
+
+
+																							</select>
+																							<select name="emd_id" onChange="dong_change()">
+																								<option VALUE="-1">
+																									- 전체 선택 -
+																								</option>
+																							</select>
+																						</td>
+																						<td width="45%" align="center">
+																							<img src="images/btn01.gif" width="73"
+																								height="22" border="0" onClick="search();">
+																						<td>
+																					</tr>
+																				</table>
+																			</td>
+																		</tr>
+
+
+
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+												<!-- 추가부분 end -->
+											</table>
+										</td>
+									</tr>
+
+
+								</table>
+							</td>
+						</tr>
+					</table>
+
+				</td>
+			</tr>
+			<tr>
+				<td height="4" width="100%">
+				</td>
+			</tr>
+			<tr>
+				<td>
+
+					<table border="1" cellpadding="0" cellspacing="0"
+						style="border-collapse: collapse;" bordercolor="#B7B19F" width=564
+						height=102>
+						<tr>
+							<td valign="top">
+
+								<div
+									style="OVERFLOW-Y: expression(( true) ? 'scroll' : 'visible' ); scrollbar-face-color: #FFFFFF; scrollbar-shadow-color: #666666; scrollbar-highlight-color: #666666; scrollbar-3dlight-color: #FFFFFF; scrollbar-darkshadow-color: #FFFFFF; scrollbar-track-color: #FFFFFF; scrollbar-arrow-color: #666666; position: absolute; z-index: 20; width: 545; height: 100">
+									<table border="0" cellpadding="0" cellspacing="0"
+										style="border-collapse: collapse;" bordercolor="#111111"
+										width="100%" bgcolor="#F9F9F7">
+										<tr>
+											<td width="100%">
+												<table border="0" cellpadding="0" cellspacing="0"
+													style="border-collapse: collapse" bordercolor="#111111"
+													width="545">
+													<tr>
+														<td width="100%" height="10"></td>
+													</tr>
+													<tr>
+														<td width="100%">
+															<table border="0" cellpadding="0" cellspacing="0"
+																style="border-collapse: collapse" bordercolor="#111111"
+																width="100%">
+																<tr>
+																	<td width="20" height="100%">
+																	</td>
+																	<td height="100%" align="center">
+																		<table border="0" cellpadding="0" cellspacing="0"
+																			style="border-collapse: collapse"
+																			bordercolor="#111111" width="100%">
+
+																			$poi_infos
+
+																		</table>
+																	</td>
+																	<td width="20" height="100%">
+																	</td>
+																</tr>
+															</table>
+														</td>
+													</tr>
+													<tr>
+														<td width="100%" height="20"></td>
+													</tr>
+													<tr>
+														<td width="100%" height="10"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</td>
+						</tr>
+					</table>
+
+
+
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<center>
+						<font color="#FFFFFF">$__message </font>
+					</center>
+				</td>
+			</tr>
+		</table>
+
+		<form name="MAIN_FORM" method="post" action="index.jsp">
+			<input name="category" type="hidden" value="$category">
+			<input type="hidden" name="cmd" value="$cmd">
+			<input type="hidden" name="cmd_para" value="$cmd_para">
+			<input type="hidden" name="minx" value="$minx">
+			<input type="hidden" name="miny" value="$miny">
+			<input type="hidden" name="maxx" value="$maxx">
+			<input type="hidden" name="maxy" value="$maxy">
+			<input type="hidden" name="poi_x" value="$poi_x">
+			<input type="hidden" name="poi_y" value="$poi_y">
+			<input type="hidden" name="map_width" value="1024">
+			<input type="hidden" name="map_height" value="600">
+			<input type="hidden" name="map_level" value="$map_level">
+			<input type="hidden" name="level" value="$view_level">
+			<input type="hidden" name="poi_name" value="$poi_name">
+			<input type="hidden" name="charset" value="euc-kr">
+			<input type="hidden" name="sel_emd_id" value="$sel_emd_id">
+			<input type="hidden" name="visit_no" value="$visit_no">
+			<input type="hidden" name="message" value="$message">
+			<input type="hidden" name="move_emd_id" value="$move_emd_id">
+			<input type="hidden" name="test" value="$test">
+		</form>
+
+		<form name="EDU_CALL_FORM" method="post" target="_parent"
+			action="http://221.150.168.64/aks/search/textContentsList.jsp ">
+			<input type="hidden" name="gis" value="">
+		</form>
+
+	</body>
+</html>

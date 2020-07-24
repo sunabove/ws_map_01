@@ -1,0 +1,216 @@
+BG_IMAGE_DRAW = 0
+BG_IMAGE_NAME = "sungnam.jpg"
+BG_IMAGE_FACTOR = 4
+BG_IMAGE_PROCESSING = 1
+BG_IMAGE_X0 = 1890
+BG_IMAGE_Y0 = 17500
+BG_IMAGE_X1 = 18700
+BG_IMAGE_Y1 = -2150
+
+GLOBAL_MIN_X = 0
+GLOBAL_MIN_Y = 0
+GLOBAL_MAX_X = 22000
+GLOBAL_MAX_Y = 18000
+
+MOBILCOM_CODE_FILE = "all_code.txt"
+HDONG_CODE_FILE = "hdong_code.txt"
+
+MUNHWA_LAYER = "1"
+NUMHWA_LAYER_BUFFER = "1"
+
+RECTIFY_CODE = "1"
+
+METRO_CODE_ORD    = "990001"
+SIKUNKU_CODE_ORD  = "990002"
+EMDONG_CODE_ROD   = "990003"
+
+URL_ENCODE = ""
+
+USE_RENDERING_HINTS = "1" 
+
+POI_ICON_NAME = "arrow.gif"
+POI_FONT_COLOR = "#C33C88"
+POI_FONT_NAME = "Serif"
+POI_FONT_SIZE = 13
+POI_FONT_STYLE = 1
+
+POI_MOVE_LEVEL = 8
+
+POI_SEARCH_MAX_NO = 10000
+
+LYR_BG = "#FFFFFF"
+POLY_FILL = "#E7E7E7"
+POLY_LINE = "#F2EECB"
+LINE = "#000000"
+FONT_COLOR = "#000000"
+FONT_SIZE = 11
+FONT_NAME = "Serif"
+#FONT_NAME = "Serif"
+FONT_STYLE = 0
+BLACK = "#000000"
+
+HIDDEN_TEXT_LEVELS= "" 
+
+MUNHWA_MAX_LEVEL = "8"
+
+SKIP_NULL_SHAPE_ID = "1"
+
+DEFAULT_CODE = "11*****"
+
+MINUS_LEVEL_10 = "1031***,41*****"
+MINUS_LEVEL_9 = "1031***,41*****,0817087,1008***,0801***,04*****,1031003,1031004,1031005,1031006,1031007,1031008,1031009,1031010"
+MINUS_LEVEL_8 = "1030***,41*****,0817087,1008***,0801***,04*****,1031003,1031004,1031005,1031006,1031007,1031008,1031009,1031010"
+MINUS_LEVEL_7 = "1030***,41*****,0817087,1008***,0801***,04*****,1031003,1031004,1031005,1031006,1031007,1031008,1031009,1031010"
+MINUS_LEVEL_6 = "1030***,41*****,0817087,1008***,0801***,04*****,1031003,1031004,1031005,1031006,1031007,1031008,1031009,1031010"
+MINUS_LEVEL_5 = "1030***,41*****,0817087,1008***,0801***,04*****,1031003,1031004,1031007,1031008,1031009,1031010"
+MINUS_LEVEL_4 = "1030***,0507002,0817087,0817025,41*****"
+MINUS_LEVEL_3 = "1030***,0507002,0817087,41*****"
+MINUS_LEVEL_2 = "1030***,0817087,0507002,41*****"
+MINUS_LEVEL_1 = "0507002,0817087"
+
+LEVEL1 = 0, 450
+LEVEL2 = 0, 700
+LEVEL3 = 0, 1000
+LEVEL4 = 0, 1400
+LEVEL5 = 1, 2300
+LEVEL6 = 1, 3400
+LEVEL7 = 1, 5000
+LEVEL8 = 2, 8000
+LEVEL9 = 2, 14000
+LEVEL10 = 2, 22000
+
+# 식사
+0100*** = "iconName: restaurant.gif; fontName: Serif; fontSize: 11; fontColor: #000000;"
+# 소매점
+0203*** = "fontName: Serif; fontColor: #000000;"
+# 소매점 (할인점 영역) 
+0203126 = "lineColor: #ADAA7B; fillColor: #FFFF84; "
+# 소매점 (할인점 건물)
+0203127 = "lineColor: #ADAA7B; fillColor: #FFFF84; "
+# 소매점 (백화점)
+0204000 = "iconName: department.gif; fontName: Serif; fontSize: 11; fontColor: #000000;"
+# 자동차 (GAS STATION) 0401*** = "iconName:oilbank.gif; fontName: Serif; fontColor: #000000;"
+# 자동차
+# 04***** = "lineColor: #DE9A5A; fillColor: #F7E3CE;"
+# 숙박 (주거 - 아파트 영역) 
+0507126 = "lineColor: #BBBBBB; fillColor: #EFEBCE; "
+#0507126 = "lineColor: #C33CAC; fillColor: #EFEBCE; "
+# 숙박 (주거)
+0507*** = "fontName: Serif; fontColor: #000000;"
+# 숙박 (호텔)
+0501*** = "iconName: hotel.gif; "fontName: Serif; fontColor: #000000; fontSize: 11;"
+# 레져 
+06***** = "lineColor: #BDE373; fillColor: #BDC373; "
+# 레져 (일반)
+0600*** = "iconName: leisure.gif; fontName: Serif; fontSize: 11; fontColor: #000000; lineColor: #BDE373; fillColor: #BDC373; "
+# 레져 (동식물원)
+0601*** = "iconName: leisure.gif; fontName: Serif; fontSize: 11; fontColor: #000000; lineColor: #BDE373; fillColor: null; "
+# 레져 (골프)
+0603*** = "iconName: golf.gif; fontName: Serif; fontSize: 11; fontColor: #000000; lineColor: #BDE373; fillColor: #ADE373; "
+# 레져 (유원지)
+0606*** = "iconName: leisure.gif; fontName: Serif; fontSize: 11; fontColor: #000000; lineColor: #BDE373; fillColor: #4EDB34; "
+# 레져 (여가/수련시설)
+0626*** = "iconName: leisure.gif; fontName: Serif; fontSize: 11; fontColor: #000000; lineColor: #BDE373; fillColor: null; "
+# 공공시설
+0700*** = "fontName: Serif; fontColor: #000000; lineColor: #E7D8EA; fillColor: null;"
+#0700*** = "fontName: Serif; fontColor: #000000; lineColor: #E7D8EA; fillColor: #A58CAA;"
+# 공공시설(병원)
+0704*** = "iconName:hospital_b.gif; fontName: Serif; fontColor: #000000; lineColor: #DE9A5A; fillColor: #F7E3CE;"
+# 공공시설(공원)
+0706*** = "lineColor: #BDE373; fillColor: #4EDB34; "
+# 공공시설(도서관)
+0703*** = "iconName:library.gif; fontName: Serif; fontColor: #000000;
+# 공공시설(치안기관 - 경찰서/해양경찰)
+0702003 = "iconName:police.gif; fontName: Serif; fontColor: #000000;
+# 공공시설(치안기관 - 파출소)
+0702004 = "iconName:police.gif; fontName: Serif; fontColor: #000000;
+# 공공시설(치안기관 - 소방서)
+0702009 = "iconName:firestation.gif; fontName: Serif; fontColor: #000000;
+# 교통 (고속도로 나들목)
+0806001 = "iconName:ic.gif; fontName: Serif; fontColor: #000000;
+# 교통 (고속도로 나들목)
+0806002 = "iconName:jc.gif; fontName: Serif; fontColor: #000000;
+# 교통 (터미널 및 승차장)
+0810*** = "iconName:busterminal.gif; fontName: Serif; fontColor: #000000;
+# 교통 (역)
+0801*** = "iconName:railway.gif; fontName: Serif; fontColor: #000000;
+# 문화시설 (성당)
+0902*** = "iconName:church.gif; fontName: Serif; fontColor: #000000;
+# 문화시설 (절)
+0903*** = "iconName:temple.gif; fontName: Serif; fontColor: #000000;
+# 문화시설 (교회)
+0904*** = "iconName:church.gif; fontName: Serif; fontColor: #000000;
+# 생활 (그외지역 - 수계)
+1020*** = "lineColor: #A5BEEF; fillColor: #A5BEEF; "
+# 생활 (산업활동) lineColor: #808080
+1016*** = "fontName: Serif; fontColor: #000000; lineColor: #8BC6B4; fillColor: #8BC6B4;"
+# 생활 (학교)
+1008*** = "iconName: school.gif; fontName: Serif; fontSize: 11; fontColor: #000000; lineColor: #CACAFC ; fillColor: #E7DBEF ; "
+# 생활 (은행)
+1002*** = "iconName: bank.gif; fontName: Serif; fontSize: 11; fontColor: #000000;
+# 생활 (우체국)
+1007*** = "iconName: postoffice.gif; fontName: Serif; fontSize: 11; fontColor: #000000;
+# 생활 (관혼상제-일반예식장)
+1009002 = "iconName: wedding.gif; fontName: Serif; fontSize: 11; fontColor: #000000;
+# 지명/문자 (고속도 번호)
+1031005 = "iconName: gosokdo.gif; valign:middle; fontSize: 11; fontColor: #FFFFF;
+# 지명/문자 (지방도 번호)
+1031007 = "iconName: jibangdo.gif; valign:middle; fontSize: 11; fontColor: #000000;
+# 지명/문자 (광역시도 번호)
+1031008 = "iconName: gwangyukdo.gif; valign:middle; fontSize: 11; fontColor: #00000;
+# 주택지도 (고속도로)
+1130100 = "lineColor: #4040FF ; fillColor: #4040FF; "
+# 주택지도 (도시고속 일반국도 지방도)
+1130*** = "lineColor: #D5A940 ; fillColor: #D5A940; "
+# 주택지도 (주요간선도)
+1131*** = "lineColor: #B5B6B5 ; fillColor: #B5B6B5; "
+# 주택지도 (그외 준도로)
+1140*** = "lineColor: #B5B6B5 ; fillColor: #B5B6B5; "
+# 공사중 고속도로 (서비스 구역)
+2020*** = "lineColor: #B39FBB ; fillColor: #B39FBB ; "
+#문화
+70***** = "iconName: simbol3.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (건축물)
+7000001 = "iconName: simbol3.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (기념물)
+7000002 = "iconName: simbol3.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (묘역)
+7000003 = "iconName: simbol3.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (비)
+7000004 = "iconName: msimbol3.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (유물산포지)
+7000005 = "iconName: simbol3.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (유적지)
+7000006 = "iconName: simbol3.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (지석묘)
+7000007 = "iconName: simbol3.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (기타유적)
+7000008 = "iconName: simbol3.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (고지명)
+7000009 = "iconName: simbol1.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (마을)
+7000010 = "iconName: simbol1.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (고개)
+7000011 = "iconName: simbol1.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (산)
+7000012 = "iconName: simbol1.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (공원)
+7000013 = "iconName: simbol1.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (다리)
+7000014 = "iconName: simbol1.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (세거지)
+7000015 = "iconName: simbol1.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (시장)
+7000016 = "iconName: simbol1.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (역)
+7000017 = "iconName: simbol1.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (하천)
+7000018 = "iconName: simbol1.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (기타지명)
+7000019 = "iconName: simbol1.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (사건)
+7000020 = "iconName: simbol2.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (식물)
+7000021 = "iconName: sikmul.gif; fontSize: 11; fontColor: #ff5f0f; "
+#문화 (유물)
+7000022 = "iconName: yumul.gif; fontSize: 11; fontColor: #ff5f0f; "

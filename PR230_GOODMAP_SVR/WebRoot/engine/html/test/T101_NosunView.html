@@ -1,0 +1,170 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+	<TITLE> GoodMap Viewer V10.00 </TITLE>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="imagetoolbar" content="no">
+	
+	<!-- Test Function -->
+	<script>
+	
+		function layer_view() 
+		{
+			var layers = document.layerlist.layer;
+			var layerNo = document.layerlist.layerno;
+			var minLevel = document.layerlist.minlevel;
+			var maxLevel = document.layerlist.maxlevel;
+
+			for(var i = 0; i < layers.length; i++)
+			{
+				// 1 번 노선
+				if (i == 0 && layers[i].checked)
+				{
+				//	alert('name: ' + layers[i].value + ', layer_no: ' + layerNo[i].value);
+					
+					var url = "/PR230_GOODMAP_SVR/engine/jsp/test02/M042_SG_IRoute_1_ShowAct.jsp?layerNo=" + layerNo[i].value + "&minLevel=" + minLevel[i].value + "&maxLevel=" + maxLevel[i].value;
+				    var params = { }; 
+				    map.callAjaxUrlParams( url, params, "" );		
+				} 
+				// 100 번 노선 
+				else if (i == 1 && layers[i].checked)
+				{
+				//	alert('name: ' + layers[i].value + ', layer_no: ' + layerNo[i].value);
+					
+					var url = "/PR230_GOODMAP_SVR/engine/jsp/test02/M042_SG_IRoute_100_ShowAct.jsp?layerNo=" + layerNo[i].value + "&minLevel=" + minLevel[i].value + "&maxLevel=" + maxLevel[i].value;
+				    var params = { }; 
+				    map.callAjaxUrlParams( url, params, "" );
+				}
+				// 1번 정류장
+				else if (i == 2 && layers[i].checked)
+				{
+				//	alert('name: ' + layers[i].value + ', layer_no: ' + layerNo[i].value);
+					
+					var url = "/PR230_GOODMAP_SVR/engine/jsp/test02/M042_SG_IRouteStation_1_ShowAct.jsp?layerNo=" + layerNo[i].value + "&minLevel=" + minLevel[i].value + "&maxLevel=" + maxLevel[i].value;
+				    var params = { }; 
+				    map.callAjaxUrlParams( url, params, "" );
+				}
+				// 100 번 정류장
+				else if (i == 3 && layers[i].checked)
+				{
+				//	alert('name: ' + layers[i].value + ', layer_no: ' + layerNo[i].value);
+					
+					var url = "/PR230_GOODMAP_SVR/engine/jsp/test02/M042_SG_IRouteStation_100_ShowAct.jsp?layerNo=" + layerNo[i].value + "&minLevel=" + minLevel[i].value + "&maxLevel=" + maxLevel[i].value;
+				    var params = { }; 
+				    map.callAjaxUrlParams( url, params, "" );
+				}
+				// 1번 버스
+				else if (i == 4 && layers[i].checked)
+				{
+				//	alert('name: ' + layers[i].value + ', layer_no: ' + layerNo[i].value);
+
+					var url = "/PR230_GOODMAP_SVR/engine/jsp/test02/M042_SG_IBus_1_ShowAct.jsp?layerNo=" + layerNo[i].value + "&minLevel=" + minLevel[i].value + "&maxLevel=" + maxLevel[i].value;
+				    var params = { }; 
+				    map.callAjaxUrlParams( url, params, "" );
+					
+				}
+				// 100번 버스
+				else if (i == 5 && layers[i].checked)
+				{
+				//	alert('name: ' + layers[i].value + ', layer_no: ' + layerNo[i].value);
+
+					var url = "/PR230_GOODMAP_SVR/engine/jsp/test02/M042_SG_IBus_100_ShowAct.jsp?layerNo=" + layerNo[i].value + "&minLevel=" + minLevel[i].value + "&maxLevel=" + maxLevel[i].value;
+				    var params = { }; 
+				    map.callAjaxUrlParams( url, params, "" );
+				}
+			}
+			
+		    map.mapRefresh(); 
+		}
+
+		function delete_layer()
+		{
+		    map.doRemoveAllPoiList(); 
+		    map.mapRefresh();
+		}
+
+	</script>
+	
+ </HEAD>
+
+ <BODY onload="mapLoader.submit();" >
+  
+	<iframe 
+		id="map"
+		name="map"
+		src="about:blank" 
+		width="500"
+		height="500"
+		scrolling="no" 
+		frameborder="3" 
+	    style="border: 4 solid #919191; padding: 0; margin: 0; "
+	>
+	</iframe>
+
+	<form 
+		id="mapLoader" 
+		name="mapLoader"
+		target="map" 
+		method="get"
+		action="/PR230_GOODMAP_SVR/engine/jsp/M020_MapControl.jsp"  >
+		<input type="hidden" name="width" value="500" />
+		<input type="hidden" name="height" value="500" />
+		<input type="hidden" name="mapX" value="252145" />
+		<input type="hidden" name="mapY" value="163015" />
+		<input type="hidden" name="zoomLevelCurr" value="8" />
+		<input type="hidden" name="logoImage" value="../../image/bg/body_bg_tile.png" />
+		<input type="hidden" name="compass" value="1" />
+		<input type="hidden" name="scaleBar" value="1" />
+	</form>
+	
+	<form name="layerlist">
+		<table>
+			<tr>
+				<td>표출 레이어</td>
+				<td>레이어 번호</td>
+				<td>MIN 표출레벨</td>
+				<td>MAX 표출레벨</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="layer" value="노선1" />노선 1</td>
+				<td><input type="text" name="layerno" size="10"/></td>
+				<td><input type="text" name="minlevel" size="10"/></td>
+				<td><input type="text" name="maxlevel" size="10"/></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="layer" value="노선100" />노선 100</td>
+				<td><input type="text" name="layerno" size="10"/></td>
+				<td><input type="text" name="minlevel" size="10"/></td>
+				<td><input type="text" name="maxlevel" size="10"/></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="layer" value="BIT1" />BIT 1</td>
+				<td><input type="text" name="layerno" size="10"/></td>
+				<td><input type="text" name="minlevel" size="10"/></td>
+				<td><input type="text" name="maxlevel" size="10"/></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="layer" value="BIT100" />BIT 100</td>
+				<td><input type="text" name="layerno" size="10"/></td>
+				<td><input type="text" name="minlevel" size="10"/></td>
+				<td><input type="text" name="maxlevel" size="10"/></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="layer" value="버스1" />버스 1</td>
+				<td><input type="text" name="layerno" size="10"/></td>
+				<td><input type="text" name="minlevel" size="10"/></td>
+				<td><input type="text" name="maxlevel" size="10"/></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="layer" value="버스100" />버스 100</td>
+				<td><input type="text" name="layerno" size="10"/></td>
+				<td><input type="text" name="minlevel" size="10"/></td>
+				<td><input type="text" name="maxlevel" size="10"/></td>
+			</tr>
+		</table>
+	</form>
+	<input type="button" value="레이어 보기" onclick="layer_view();">
+	<input type="button" value="POI 삭제" onclick="delete_layer();">
+	
+ </BODY>
+</HTML>
